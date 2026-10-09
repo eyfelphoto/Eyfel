@@ -1,0 +1,6 @@
+{
+  "name": "Ebedi Hatıra - UV Baskı Mezar Plakaları",
+  "description": "Mezar taşları için 10 yıl solmama garantili, güneş ve yağmura dayanıklı, montaj yapıştırıcısı dahil beyaz metal UV baskı fotoğraf ve anma plakaları.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
