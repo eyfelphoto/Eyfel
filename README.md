@@ -28,8 +28,11 @@ Türkiye'deki vefat eden sevdiklerimiz ve can dostlarımız (kedi & köpek) içi
    - **Vidasız & Düz Metal:** Kesinlikle vida deliği yoktur; arkasına sürülen özel hibrit yapıştırıcı ile mezar taşına yapıştırılır.
 
 4. **60x60 cm Mezar Taşı Canlı Simülatörü:**
-   - Mezar taşının üst kısmındaki **30x60 cm'lik boş mermer alan** modellenmiştir.
-   - Seçilen her ebat (10x15, 13x18, 15x21, 20x30 cm) taş üzerinde birebir gerçek ölçeğinde simüle edilir.
+   - Mezar taşının ön yüzü **60 x 60 cm** karedir.
+   - **Alt 60x30 cm Alanı:** Mermere oyulmuş şekilde `ÖRNEK İSİM SOYİSİM`, `00.00.0000 - 00.00.0000` ve `RUHUNA FATİHA` geleneksel taş yazısı yer alır.
+   - **Üst 60x30 cm Alanı:** Metal fotoğraf plakası doğrudan bu alana yapışır.
+   - Seçilen her ebat (10x15, 13x18, 15x21, 20x30 cm) bu alanda birebir gerçek ölçeğinde simüle edilir.
+   - **Vercel Uyumlu Görseller:** Tüm fotoğraflar `/public/images/` dizinindedir; Vercel ve Netlify derlemesinde (`npm run build`) eksiksiz olarak `dist/images/` altına aktarılır ve kırık görsel sorunu yaşanmaz.
 
 5. **Geniş Dosya Desteği:**
    - JPEG, JPG, PNG, WEBP, TIFF, HEIC (iPhone) ve PDF dosyaları yüklenebilir.

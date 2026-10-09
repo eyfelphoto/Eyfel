@@ -47,7 +47,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>Can Dostlarımız</span>
             </a>
             <a href="#montaj-rehberi" className="hover:text-amber-700 transition-colors">
-              Montaj Rehberi (Yapıştırıcı Hediye)
+              Montaj Rehberi (Vidasız)
             </a>
             <a href="#yorumlar" className="hover:text-amber-700 transition-colors">
               Müşteri Yorumları

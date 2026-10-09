@@ -31,10 +31,12 @@ export interface Product {
 
 export interface CustomizationOptions {
   sizeId: string;
+  selectedShape?: ShapeModel; // For pet models: allows choosing between Dikdörtgen, Kare, Kalp, Yuvarlak
   photoUrl: string | null;
   photoFileName?: string;
   photoColorMode: 'original' | 'bw';
-  photoZoom: number; // 1 to 2
+  photoZoom?: number; // Optional
+  includeGlue?: boolean; // Opsiyonel Selsil Ultra Tack 50ml Montaj Yapıştırıcısı (+299 TL)
   includeText?: boolean; // For pet models: optionally include text
   fullName?: string;
   dates?: string;
@@ -52,6 +54,8 @@ export interface CartItem {
   selectedSize: ProductSize;
   customization: CustomizationOptions;
   unitPrice: number;
+  includeGlue?: boolean;
+  gluePrice?: number; // 299 TL
   quantity: number;
   addedAt: number;
 }

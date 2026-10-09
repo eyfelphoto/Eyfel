@@ -159,7 +159,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             </span>
           </div>
           <span className="hidden md:inline font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded text-[11px]">
-            Ücretsiz Montaj Yapıştırıcısı Kutuya Eklendi
+            10 Yıl Dış Mekan Solmama Garantisi
           </span>
         </div>
 
@@ -481,10 +481,12 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   <span>-{havaleDiscount} ₺</span>
                 </div>
               )}
-              <div className="flex justify-between text-neutral-600">
-                <span>Özel Taş Yapıştırıcısı:</span>
-                <span className="text-emerald-600 font-bold">ÜCRETSİZ HEDİYE</span>
-              </div>
+              {items.some(i => i.includeGlue) && (
+                <div className="flex justify-between text-neutral-600">
+                  <span>Selsil Ultra Tack Yapıştırıcı:</span>
+                  <span className="text-amber-800 font-bold">DAHİL</span>
+                </div>
+              )}
               <div className="flex justify-between text-neutral-600">
                 <span>Sigortalı Hızlı Kargo:</span>
                 <span className="text-emerald-600 font-bold">ÜCRETSİZ</span>

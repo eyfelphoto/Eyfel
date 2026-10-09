@@ -31,7 +31,7 @@ export const MarbleNoticeBanner: React.FC = () => {
               Önemli Bilgilendirme
             </span>
             <span className="font-medium text-amber-50">
-              Firmamız <strong className="text-white underline decoration-amber-300 underline-offset-2">Mezar Mermeri veya Mezar Taşı satışı YAPMAMAKTADIR.</strong> Ürünlerimiz, mevcut mezar taşlarına arkasındaki hediye yapıştırıcı ile yapıştırılan, <strong className="text-white">10 Yıl Solmama Garantili Beyaz Metal UV Baskı</strong> anma plakalarıdır.
+              Firmamız <strong className="text-white underline decoration-amber-300 underline-offset-2">Mezar Mermeri veya Mezar Taşı satışı YAPMAMAKTADIR.</strong> Ürünlerimiz, mevcut mezar taşlarına vidalamadan güçlü montaj yapıştırıcısıyla uygulanan, <strong className="text-white">10 Yıl Solmama Garantili Beyaz Metal UV Baskı</strong> anma plakalarıdır.
             </span>
           </div>
         </div>

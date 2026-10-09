@@ -18,7 +18,7 @@ export const FAQS: FAQItem[] = [
   {
     category: 'Montaj & Yapıştırıcı',
     question: 'Mezar taşına nasıl yapıştırılır? Yanında yapıştırıcı gönderiyor musunuz?',
-    answer: 'EVET. Her ürün siparişinizin yanında, dış mekan taş ve mermer yapıştırmaya özel güçlü hibrit polimer yapıştırıcı ve uygulama bezi ÜCRETSİZ olarak gönderilmektedir. Matkapla delmeye veya vidaya gerek yoktur. Plakanın arkasına dalga dalga yapıştırıcı sürüp mermere 30 saniye bastırmanız yeterlidir.',
+    answer: 'Metal plakalarımız vida deliği veya delme işlemi gerektirmez, pürüzsüz düz plakalardır. Mermer veya taş yüzeye montaj için sipariş esnasında güçlü ve ağır yük taşıma kapasiteli "Selsil Ultra Tack No Nail (50ml)" profesyonel montaj yapıştırıcısını opsiyonel olarak (+299 ₺) sepetinize ekleyebilirsiniz. Plakanın arkasına şeritler halinde yapıştırıcı sürüp mermere 30-40 saniye bastırmanız yeterlidir; güneş, don ve şiddetli yağmura karşı tam dayanıklıdır.',
   },
   {
     category: 'Fotoğraf & Formatlar',
@@ -26,9 +26,9 @@ export const FAQS: FAQItem[] = [
     answer: 'Sistemimiz JPEG, JPG, PNG, WEBP, TIFF, HEIC (iPhone) ve PDF formatlarının tamamını desteklemektedir. Eski veya yıpranmış vesikalık fotoğraflarınızı telefonunuzla net bir şekilde çekip yükleyebilirsiniz. Grafik ekibimiz baskı öncesinde fotoğraftaki çizik ve soluklukları ücretsiz olarak rötuşlar ve optimize eder.',
   },
   {
-    category: 'Kişiselleştirme',
-    question: 'Yazı alanı zorunlu mu? İstediğim duayı veya sözü yazdırabilir miyim?',
-    answer: 'Yazı alanı tamamen opsiyoneldir. Sadece fotoğraf bastırabileceğiniz gibi; Merhum/Merhume adı, doğum-vefat tarihi, "Ruhuna Fatiha", ayet, şiir veya özel anma sözleri de ekletebilirsiniz. Tasarım simülatörümüz ile mezar taşında nasıl duracağını anında görebilirsiniz.',
+    category: 'Baskı Seçenekleri',
+    question: 'İnsan mezarları ile can dostlarımız (evcil hayvan) arasındaki baskı farkı nedir?',
+    answer: 'İnsan mezarlarında sadece yüksek çözünürlüklü fotoğraf baskısı yapmaktayız; isim, tarih ve dualar mermer mezar taşına taş ustası tarafından kazındığından, plakanız taşın üst 60x30 cm boş alanına asil bir mezar fotoğrafı olarak yapıştırılır. Kedi ve köpek can dostlarımızda ise isteğe bağlı olarak sadece fotoğraf veya dostumuzun ismi ve sevgi sözü basılmaktadır (hayvan mezarlarında Ruhuna Fatiha veya insan mezar yazıları yer almaz).',
   },
   {
     category: 'Ödeme & Teslimat',

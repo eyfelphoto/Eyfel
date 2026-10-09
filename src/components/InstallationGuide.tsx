@@ -12,14 +12,14 @@ export const InstallationGuide: React.FC = () => {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 bg-amber-500/20 text-amber-300 text-xs uppercase px-3 py-1 rounded-full font-bold tracking-wider mb-3 border border-amber-500/30">
-            <Gift className="w-3.5 h-3.5" />
-            <span>Kutu İçinde Ücretsiz Hediye</span>
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Vidasız & Matkapsız Montaj</span>
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">
             Matkapsız & Vidasız: 3 Adımda Kolay Montaj
           </h2>
           <p className="text-neutral-400 text-sm sm:text-base mt-3 leading-relaxed">
-            Mermerci çağırmanıza veya mezar taşını delmenize gerek yoktur. Özel dış mekan hibrit polimer yapıştırıcımız kutu içerisinde <strong>ücretsiz</strong> olarak gönderilir.
+            Mermerci çağırmanıza veya mezar taşını delmenize gerek yoktur. Güçlü dış mekan montaj yapıştırıcısı <strong>Selsil Ultra Tack (50ml)</strong> siparişinizde opsiyonel olarak (+299 ₺) temin edilebilir.
           </p>
         </div>
 
@@ -27,31 +27,31 @@ export const InstallationGuide: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Left: Product Adhesive Photo Card */}
           <div className="lg:col-span-5 bg-white rounded-2xl overflow-hidden shadow-2xl p-4 sm:p-6 text-neutral-900 border border-neutral-800">
-            <div className="relative aspect-square rounded-xl overflow-hidden bg-neutral-100 mb-4">
+            <div className="relative aspect-square rounded-xl overflow-hidden bg-neutral-100 mb-4 flex items-center justify-center p-3">
               <img
-                src="/src/assets/images/montaj_yapistirici_1791553905534.jpg"
-                alt="Özel Dış Mekan Mezar Taşı Montaj Yapıştırıcısı"
-                className="w-full h-full object-cover object-center"
+                src="/images/selsil_ultra_tack.jpg"
+                alt="Selsil Ultra Tack 50ml No Nail Montaj Yapıştırıcısı"
+                className="w-full h-full object-contain"
               />
-              <div className="absolute top-3 left-3 bg-emerald-600 text-white text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-md">
-                <Gift className="w-3.5 h-3.5" />
-                <span>Her Siparişte Ücretsiz</span>
+              <div className="absolute top-3 left-3 bg-neutral-900 text-white text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-md">
+                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                <span>350 kg/m² Anında Tutunma</span>
               </div>
             </div>
 
             <h3 className="font-extrabold text-base text-neutral-900">
-              Ultra-Hold Hibrit Polimer Taş Yapıştırıcısı
+              Selsil Ultra Tack Ağır Yük Montaj Yapıştırıcısı (50ml)
             </h3>
             <p className="text-xs text-neutral-600 mt-1 leading-relaxed">
-              Dış mekan mermer, granit ve taş yüzeyler için özel üretilmiştir. Aşırı sıcaklarda erimez, donucu kış şartlarında çatlamaz, neme ve suya %100 dayanıklıdır.
+              Dış mekan mermer, granit, beton ve taş yüzeyler için özel üretilmiştir. Aşırı yaz sıcaklarında erimez, dondurucu kış şartlarında çatlamaz, neme ve suya %100 dayanıklıdır.
             </p>
 
             <div className="mt-4 pt-3 border-t border-neutral-100 flex items-center justify-between text-xs text-neutral-700">
               <span className="flex items-center gap-1 font-semibold text-emerald-700">
                 <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                Dış Mekan Dayanımlı
+                Dış Mekan & Donmaya Dayanıklı
               </span>
-              <span className="text-neutral-500">• 0 ₺ Ücretsiz Hediye</span>
+              <span className="text-amber-800 font-bold bg-amber-50 px-2 py-0.5 rounded border border-amber-200">+299 ₺ Opsiyonel</span>
             </div>
           </div>
 
@@ -65,7 +65,7 @@ export const InstallationGuide: React.FC = () => {
               <div>
                 <h4 className="text-base font-bold text-white">Mermer Yüzeyi Temizleyin ve Kurulayın</h4>
                 <p className="text-neutral-400 text-xs sm:text-sm mt-1 leading-relaxed">
-                  Plakayı yapıştıracağınız mezar baş taşının yüzeyindeki toz, çamur veya yosunu paket içerisindeki temizleme bezi veya kuru bir bezle temizleyin. Yüzeyin tamamen kuru olduğundan emin olun.
+                  Plakayı yapıştıracağınız mezar baş taşının yüzeyindeki toz, çamur veya nemi kuru ve temiz bir bezle silin. Yüzeyin tamamen kuru ve pürüzsüz olduğundan emin olun.
                 </p>
               </div>
             </div>
@@ -76,9 +76,9 @@ export const InstallationGuide: React.FC = () => {
                 2
               </div>
               <div>
-                <h4 className="text-base font-bold text-white">Metal Plakanın Arkasına Yapıştırıcıyı Sürün</h4>
+                <h4 className="text-base font-bold text-white">Metal Plakanın Arkasına Selsil Ultra Tack Sürün</h4>
                 <p className="text-neutral-400 text-xs sm:text-sm mt-1 leading-relaxed">
-                  Hediye gönderdiğimiz özel tüp yapıştırıcıyı beyaz metal plakanın arka yüzeyine dalgalı şeritler halinde veya köşelere ve ortaya fındık büyüklüğünde noktalar şeklinde sıkın.
+                  Selsil Ultra Tack montaj yapıştırıcısını beyaz metal plakanın arka yüzeyine dalgalı şeritler halinde veya köşelere ve orta kısımlara fındık büyüklüğünde noktalar şeklinde uygulayın.
                 </p>
               </div>
             </div>
@@ -91,7 +91,7 @@ export const InstallationGuide: React.FC = () => {
               <div>
                 <h4 className="text-base font-bold text-white">Taşa Hizalayın ve 30-40 Saniye Bastırın</h4>
                 <p className="text-neutral-400 text-xs sm:text-sm mt-1 leading-relaxed">
-                  Plakayı mezar taşı üzerinde düzgün şekilde hizalayarak yerine koyun ve tüm yüzeyine eşit kuvvetle 30-40 saniye boyunca iki elinizle sıkıca bastırın. Yapıştırıcı anında ilk tutunmayı sağlar ve 24 saatte taşla bütünleşir.
+                  Plakayı mezar taşı üzerinde düzgün şekilde hizalayarak yerine koyun ve tüm yüzeyine eşit kuvvetle 30-40 saniye boyunca iki elinizle sıkıca bastırın. Selsil Ultra Tack anında ilk tutunmayı sağlar ve kısa sürede taşla bütünleşir.
                 </p>
               </div>
             </div>

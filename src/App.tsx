@@ -138,21 +138,21 @@ export default function App() {
           <div className="text-center max-w-3xl mx-auto mb-10">
             <div className="inline-flex items-center gap-2 bg-amber-100 text-amber-900 text-xs uppercase px-3 py-1 rounded-full font-bold tracking-wider mb-2">
               <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              <span>Özel Tasarım Anma Plakaları</span>
+              <span>Özel UV Metal Anma Plakaları</span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-neutral-900 tracking-tight">
               Mezar Taşı Beyaz Metal UV Plaka Modellerimiz
             </h2>
             <p className="text-neutral-600 text-sm mt-2 leading-relaxed">
-              Her modelde <strong>10x15, 13x18, 15x21 ve 20x30 cm</strong> olmak üzere 4 farklı boyut seçeneği mevcuttur. 
-              İnsan mezar modellerinde sadece yüksek çözünürlüklü fotoğraf baskısı uygulanır; can dostlarımızda ise isteğe bağlı fotoğraf veya yazı+fotoğraf seçebilirsiniz.
+              Dikdörtgen modellerde <strong>10x15, 13x18, 15x21 ve 20x30 cm</strong>; Kare, Yuvarlak ve Kalp modellerde <strong>10x10, 13x13, 15x15 ve 20x20 cm</strong> olmak üzere 4 farklı ebat seçeneği mevcuttur. 
+              İnsan mezar modellerinde sadece yüksek çözünürlüklü fotoğraf baskısı uygulanır (60x60 taşın üst 60x30 alanına uyumlu); can dostlarımızda ise her ürün içerisinde 4 form (kare, dikdörtgen, yuvarlak, kalp) seçeneği yer alır.
             </p>
 
             {/* Crucial in-section reminder */}
             <div className="mt-4 inline-flex items-center gap-2 text-xs text-amber-900 bg-amber-50 border border-amber-300 px-4 py-2 rounded-xl">
               <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
               <span>
-                <strong>Önemli Not:</strong> Mezar mermeri satmıyoruz. Sadece mevcut mezar taşlarına yapıştırılan metal baskı plaka üretiyoruz. Montaj yapıştırıcısı hediyedir.
+                <strong>Önemli Not:</strong> Mezar mermeri satmıyoruz. Sadece mevcut mezar taşlarına yapıştırılan metal baskı plaka üretiyoruz. Delme/vida gerektirmez.
               </span>
             </div>
           </div>
@@ -237,7 +237,7 @@ export default function App() {
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Bahçe veya mezar taşına yapıştırmak için ücretsiz özel yapıştırıcı hediye</span>
+                    <span>Bahçe veya anıt taşına kolay yapıştırma, delme veya vida gerektirmez</span>
                   </div>
                 </div>
 
@@ -248,9 +248,9 @@ export default function App() {
                       const kedi = PRODUCTS.find((p) => p.id === 'kedi-model');
                       if (kedi) setSelectedProduct(kedi);
                     }}
-                    className="px-4 py-2.5 bg-neutral-900 hover:bg-neutral-800 text-white rounded-xl text-xs font-bold transition-colors"
+                    className="px-4 py-2.5 bg-neutral-900 hover:bg-neutral-800 text-white rounded-xl text-xs font-bold transition-colors cursor-pointer"
                   >
-                    🐾 Kedi Plakasını Tasarla
+                    🐾 Kedi Plakası Siparişi Ver
                   </button>
                   <button
                     type="button"
@@ -258,9 +258,9 @@ export default function App() {
                       const kopek = PRODUCTS.find((p) => p.id === 'kopek-model');
                       if (kopek) setSelectedProduct(kopek);
                     }}
-                    className="px-4 py-2.5 bg-amber-700 hover:bg-amber-800 text-white rounded-xl text-xs font-bold transition-colors"
+                    className="px-4 py-2.5 bg-amber-700 hover:bg-amber-800 text-white rounded-xl text-xs font-bold transition-colors cursor-pointer"
                   >
-                    🐾 Köpek Plakasını Tasarla
+                    🐾 Köpek Plakası Siparişi Ver
                   </button>
                 </div>
               </div>
@@ -274,7 +274,7 @@ export default function App() {
                   }}
                 >
                   <img
-                    src="/src/assets/images/kedi_mezar_model_1791553838687.jpg"
+                    src="/images/kedi_duz_model_1791556997205.jpg"
                     alt="Kedi Mezar Plakası"
                     className="w-full aspect-square object-cover"
                   />
@@ -292,7 +292,7 @@ export default function App() {
                   }}
                 >
                   <img
-                    src="/src/assets/images/kopek_mezar_model_1791553857984.jpg"
+                    src="/images/kopek_duz_model_1791557023754.jpg"
                     alt="Köpek Mezar Plakası"
                     className="w-full aspect-square object-cover"
                   />

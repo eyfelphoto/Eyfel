@@ -36,7 +36,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ featuredProduct, onCus
             {/* Subtitle */}
             <p className="text-sm sm:text-base text-neutral-600 leading-relaxed max-w-2xl">
               Türkiye'deki vefat eden sevdiklerimiz ve can dostlarımız için; güneşin yakıcı ışığına, yağmura, kara ve dondurucu soğuğa 10 yıl dayanıklı beyaz metal plaka üzerine canlı fotoğraf baskısı. 
-              <strong> Arkasına süreceğiniz hediye yapıştırıcı ile mezar mermerine matkapsız ve delmesiz yapışır.</strong>
+              <strong> Arkasındaki güçlü montaj yapıştırıcısı ile mezar mermerine matkapsız ve delmesiz yapışır.</strong>
             </p>
 
             {/* CRITICAL MARBLE WARNING BOX */}
@@ -47,7 +47,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ featuredProduct, onCus
                   ÖNEMLİ BİLGİ: MEZAR MERMERİ SATMIYORUZ!
                 </strong>
                 <span>
-                  Sitemizden sipariş verdiğinizde tarafınıza <strong>mezar mermeri gönderilmez</strong>. Mevcut mezar taşına yapıştırılmak üzere tasarlanmış <strong>UV baskılı beyaz metal plaka</strong> ve <strong>ücretsiz montaj yapıştırıcısı</strong> gönderilir.
+                  Sitemizden sipariş verdiğinizde tarafınıza <strong>mezar mermeri gönderilmez</strong>. Mevcut mezar taşına yapıştırılmak üzere tasarlanmış <strong>UV baskılı beyaz metal plaka</strong> gönderilir.
                 </span>
               </div>
             </div>
@@ -64,10 +64,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ featuredProduct, onCus
 
               <div className="bg-white p-3 rounded-xl border border-neutral-200 shadow-xs">
                 <div className="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center mb-2">
-                  <Gift className="w-4 h-4" />
+                  <Sparkles className="w-4 h-4" />
                 </div>
-                <div className="text-xs font-bold text-neutral-900">Yapıştırıcı Hediye</div>
-                <div className="text-[11px] text-neutral-500 mt-0.5">Paket İçinde Ücretsiz</div>
+                <div className="text-xs font-bold text-neutral-900">Vidasız Montaj</div>
+                <div className="text-[11px] text-neutral-500 mt-0.5">Mermer Delinmez</div>
               </div>
 
               <div className="bg-white p-3 rounded-xl border border-neutral-200 shadow-xs">
@@ -93,18 +93,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ featuredProduct, onCus
                 href="#modeller"
                 className="px-6 py-3.5 bg-gradient-to-r from-neutral-900 to-neutral-800 hover:from-amber-700 hover:to-amber-800 text-white rounded-xl font-bold text-sm shadow-xl flex items-center gap-2 transition-all"
               >
-                <span>6 Modeli İncele & Tasarla</span>
+                <span>6 Modeli İncele & Sipariş Ver</span>
                 <ArrowRight className="w-4 h-4" />
               </a>
 
-              <button
-                type="button"
-                onClick={() => onCustomize(featuredProduct)}
+              <a
+                href="#montaj-rehberi"
                 className="px-5 py-3.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 rounded-xl font-bold text-xs flex items-center gap-2 transition-colors cursor-pointer"
               >
                 <Sparkles className="w-4 h-4 text-amber-600" />
-                <span>Canlı Mezar Taşı Simülatörünü Aç</span>
-              </button>
+                <span>Montaj Rehberi (Vidasız & Matkapsız)</span>
+              </a>
             </div>
           </div>
 
@@ -136,17 +135,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ featuredProduct, onCus
                   <button
                     type="button"
                     onClick={() => onCustomize(featuredProduct)}
-                    className="px-3.5 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-md transition-colors shrink-0"
+                    className="px-3.5 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-md transition-colors shrink-0 cursor-pointer"
                   >
-                    Hemen Tasarla
+                    Hemen Sipariş Ver
                   </button>
                 </div>
               </div>
 
-              {/* Free Adhesive Badge Top Right */}
-              <div className="absolute top-4 right-4 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 shadow-lg">
-                <Gift className="w-3.5 h-3.5" />
-                <span>Özel Yapıştırıcı Dahil</span>
+              {/* Guarantee Badge Top Right */}
+              <div className="absolute top-4 right-4 bg-neutral-900/90 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 shadow-lg backdrop-blur-md">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span>10 Yıl Garanti</span>
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { CartItem } from '../types';
-import { X, Trash2, Gift, ShieldCheck, ArrowRight, ShoppingBag, AlertTriangle } from 'lucide-react';
+import { X, Trash2, Gift, ShieldCheck, ArrowRight, ShoppingBag, AlertTriangle, Sparkles } from 'lucide-react';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -129,12 +129,18 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     </div>
                   </div>
 
-                  {/* Quantity and Free Gift badge */}
+                  {/* Quantity and Glue status */}
                   <div className="flex items-center justify-between pt-2 border-t border-neutral-200/70 text-xs">
-                    <div className="flex items-center gap-1.5 text-[11px] text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded">
-                      <Gift className="w-3 h-3 text-emerald-600" />
-                      <span>Montaj Yapıştırıcısı Hediye</span>
-                    </div>
+                    {item.includeGlue ? (
+                      <div className="flex items-center gap-1.5 text-[11px] text-amber-900 font-bold bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                        <Sparkles className="w-3 h-3 text-amber-600" />
+                        <span>Selsil Ultra Tack (+299 ₺)</span>
+                      </div>
+                    ) : (
+                      <div className="text-[11px] text-neutral-400 font-medium">
+                        Yapıştırıcı Eklenmedi
+                      </div>
+                    )}
 
                     <div className="flex items-center border border-neutral-300 rounded-lg bg-white overflow-hidden">
                       <button
@@ -168,8 +174,10 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   <span className="font-semibold text-neutral-900">{subtotal} ₺</span>
                 </div>
                 <div className="flex justify-between text-neutral-600">
-                  <span>Dış Mekan Yapıştırıcı Seti:</span>
-                  <span className="font-semibold text-emerald-600">0 ₺ (Ücretsiz Hediye)</span>
+                  <span>Dış Mekan Yapıştırıcı:</span>
+                  <span className="font-semibold text-neutral-800">
+                    {items.some(i => i.includeGlue) ? 'Selsil Ultra (+299 ₺) Dahil' : 'Seçilmedi (Opsiyonel)'}
+                  </span>
                 </div>
                 <div className="flex justify-between text-neutral-600">
                   <span>Sigortalı Kargo:</span>

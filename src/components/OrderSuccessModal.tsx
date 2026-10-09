@@ -66,15 +66,16 @@ export const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({
 
         {/* Modal Body */}
         <div className="p-5 sm:p-6 space-y-4 max-h-[70vh] overflow-y-auto text-xs">
-          {/* Free Gift Card Box */}
+          {/* Packaging Box */}
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-3.5 flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
-              <Gift className="w-5 h-5" />
+              <ShieldCheck className="w-5 h-5 text-amber-700" />
             </div>
             <div>
-              <div className="font-bold text-amber-900">Özel Dış Mekan Montaj Yapıştırıcısı Kutuya Eklendi!</div>
+              <div className="font-bold text-amber-900">10 Yıl Solmama Garantili Özel Paketleme</div>
               <div className="text-amber-800 text-[11px] mt-0.5">
-                Taş ve mermere özel hava koşullarına dayanıklı hibrit polimer yapıştırıcı ve uygulama kılavuzu paketinizle birlikte ücretsiz gönderilmektedir.
+                Metal plakanız ve detaylı montaj kılavuzunuz darbe emici özel koruyucu ambalajında kargoya hazırlanacaktır.
+                {order.items.some(i => i.includeGlue) && ' (Selsil Ultra Tack montaj yapıştırıcınız kutu içerisine eklenmiştir.)'}
               </div>
             </div>
           </div>
@@ -153,7 +154,7 @@ export const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({
               </div>
               <div className="p-2.5 bg-neutral-50 rounded-lg">
                 <div className="font-bold text-neutral-900">3. Kargo & Teslimat</div>
-                <p className="text-[11px] text-neutral-500 mt-0.5">Özel darbe emici kutusunda ücretsiz yapıştırıcısıyla kargolanır.</p>
+                <p className="text-[11px] text-neutral-500 mt-0.5">Özel darbe emici kutusunda sigortalı kargo ile gönderilir.</p>
               </div>
             </div>
           </div>

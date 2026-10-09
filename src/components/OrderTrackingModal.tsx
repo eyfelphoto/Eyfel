@@ -70,7 +70,7 @@ export const OrderTrackingModal: React.FC<OrderTrackingModalProps> = ({
     { title: 'Sipariş Alındı', desc: 'Ödeme ve sipariş detayları teyit edildi', done: true },
     { title: 'Grafik Rötuş & Hazırlık', desc: 'Fotoğraf çözünürlüğü ve yazılar UV baskı kalıbına aktarıldı', done: true },
     { title: 'Beyaz Metal UV Baskı', desc: '10 Yıl solmama korumalı dış mekan baskı işlemi yapılıyor', done: true },
-    { title: 'Paketleme & Yapıştırıcı', desc: 'Özel darbe emici kutuya ve hediye montaj yapıştırıcısı eklendi', done: false },
+    { title: 'Paketleme & Kalite Kontrol', desc: 'Özel darbe emici kutuya yerleştirildi ve montaj kılavuzu eklendi', done: false },
     { title: 'Kargoya Verildi', desc: 'Sigortalı kargo ile adresinize sevk edilecek', done: false },
   ];
 
@@ -153,11 +153,11 @@ export const OrderTrackingModal: React.FC<OrderTrackingModalProps> = ({
                 ))}
               </div>
 
-              {/* Free Glue & Installation Reminder */}
+              {/* Installation Guide Reminder */}
               <div className="bg-neutral-50 p-3 rounded-xl border border-neutral-200 flex items-center gap-2.5 text-neutral-600">
                 <Package className="w-4 h-4 text-amber-600 shrink-0" />
                 <span className="text-[11px]">
-                  Paketinizin içinde mezar taşına kolay montaj için <strong>özel taş yapıştırıcısı</strong> mevcuttur.
+                  Paketinizin içinde mezar taşına kolay montaj için detaylı <strong>uygulama ve montaj kılavuzu</strong> mevcuttur.
                 </span>
               </div>
             </div>
