@@ -1,0 +1,157 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Eyfel Mezar Plakaları",
+    "theme_version": "1.0.0",
+    "theme_author": "Eyfel Tasarım",
+    "theme_documentation_url": "https://eyfeltasarim.com",
+    "theme_support_url": "https://eyfeltasarim.com/destek"
+  },
+  {
+    "name": "Genel Ayarlar & Renkler",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Mağaza Logosu"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 100,
+        "max": 300,
+        "step": 10,
+        "unit": "px",
+        "label": "Logo Genişliği",
+        "default": 180
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Ana Vurgulama Rengi (Altın/Amber)",
+        "default": "#d97706"
+      },
+      {
+        "type": "color",
+        "id": "color_dark",
+        "label": "Koyu Arka Plan Rengi (Granit)",
+        "default": "#171717"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Metin Rengi",
+        "default": "#1c1917"
+      },
+      {
+        "type": "color",
+        "id": "color_guarantee",
+        "label": "Garanti Rozeti Vurgusu (Yeşil)",
+        "default": "#059669"
+      }
+    ]
+  },
+  {
+    "name": "Selsil Ultra Yapıştırıcı Ayarları",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_selsil_addon",
+        "label": "Ürün Sayfalarında Selsil Ultra Tack Opsiyonunu Göster",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "selsil_glue_price",
+        "label": "Selsil Ultra Tack Fiyatı (TL)",
+        "default": 299
+      },
+      {
+        "type": "text",
+        "id": "selsil_glue_title",
+        "label": "Yapıştırıcı Başlığı",
+        "default": "Selsil Ultra Tack Montaj Yapıştırıcısı (50ml)"
+      },
+      {
+        "type": "textarea",
+        "id": "selsil_glue_desc",
+        "label": "Yapıştırıcı Açıklaması",
+        "default": "Mermer, taş ve dış mekan yüzeylerine delme veya vidaya gerek olmadan ultra güçlü anında yapışma sağlar. Suya, kara ve güneşe 10 yıl tam dayanıklıdır."
+      },
+      {
+        "type": "image_picker",
+        "id": "selsil_glue_image",
+        "label": "Selsil Yapıştırıcı Görseli"
+      }
+    ]
+  },
+  {
+    "name": "10 Yıl Garanti & Güvenilirlik",
+    "settings": [
+      {
+        "type": "text",
+        "id": "guarantee_title",
+        "label": "Garanti Başlığı",
+        "default": "10 Yıl Açık Hava Solmama Garantisi"
+      },
+      {
+        "type": "text",
+        "id": "guarantee_subtitle",
+        "label": "Garanti Açıklaması",
+        "default": "UV Lak Kaplamalı Beyaz Alüminyum Metal Üzerine Yüksek Çözünürlüklü Baskı"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_guarantee_badge_on_cards",
+        "label": "Ürün Kartlarında Garanti Rozetini Göster",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Mezar Taşı 60x60 Bilgilendirme Bannerı",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_marble_notice",
+        "label": "Ana Sayfada 60x60 Mezar Taşı Uyarısını Göster",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "marble_notice_title",
+        "label": "Banner Başlığı",
+        "default": "Standart Mezar Taşı Ölçüsü: 60x60 cm"
+      },
+      {
+        "type": "textarea",
+        "id": "marble_notice_text",
+        "label": "Banner Metni",
+        "default": "Türkiye mezarlıklarındaki standart mezar baş taşları 60x60 cm ölçüsündedir. Plakalarımız taş ustasının isim kazıması yaptığı alt bölümü kapatmayacak şekilde üst 60x30 cm alana doğrudan yapıştırılmaktadır."
+      }
+    ]
+  },
+  {
+    "name": "İletişim & WhatsApp Sipariş Hattı",
+    "settings": [
+      {
+        "type": "text",
+        "id": "whatsapp_number",
+        "label": "WhatsApp Destek Numarası (Örn: 905XXXXXXXXX)",
+        "default": "905551234567"
+      },
+      {
+        "type": "text",
+        "id": "whatsapp_message_prefix",
+        "label": "Varsayılan WhatsApp Mesajı",
+        "default": "Merhaba, Eyfel Mezar Plakaları hakkında bilgi ve fotoğraf kontrolü için yazıyorum."
+      },
+      {
+        "type": "text",
+        "id": "support_working_hours",
+        "label": "Müşteri Hizmetleri Çalışma Saatleri",
+        "default": "Haftanın 7 günü 09:00 - 22:00"
+      }
+    ]
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "sections": {
+    "main_product": {
+      "type": "main-product",
+      "settings": {}
+    },
+    "installation_guide": {
+      "type": "installation-guide",
+      "settings": {
+        "title": "Matkapsız & Vidasız: 3 Adımda Kolay Montaj",
+        "subtitle": "Mermerci çağırmanıza veya mezar taşını delmenize gerek yoktur. Güçlü dış mekan montaj yapıştırıcısı Selsil Ultra Tack (50ml) siparişinizde opsiyonel olarak (+299 ₺) temin edilebilir."
+      }
+    },
+    "reviews": {
+      "type": "customer-reviews",
+      "settings": {
+        "title": "Müşterilerimizin Deneyimleri"
+      }
+    },
+    "faq": {
+      "type": "faq-section",
+      "settings": {
+        "title": "Sıkça Sorulan Sorular"
+      }
+    }
+  },
+  "order": [
+    "main_product",
+    "installation_guide",
+    "reviews",
+    "faq"
+  ]
+}

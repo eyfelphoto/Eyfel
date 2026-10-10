@@ -1,0 +1,110 @@
+<section id="montaj-rehberi" class="py-16 bg-stone-900 text-white relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <div class="inline-flex items-center gap-2 bg-amber-500/20 text-amber-300 text-xs uppercase px-3 py-1 rounded-full font-bold tracking-wider mb-3 border border-amber-500/30">
+        <span>Vidasız & Matkapsız Montaj</span>
+      </div>
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-serif font-black tracking-tight text-stone-100">
+        {{ section.settings.title | default: 'Matkapsız & Vidasız: 3 Adımda Kolay Montaj' }}
+      </h2>
+      <p class="text-stone-400 text-sm sm:text-base mt-3 leading-relaxed">
+        {{ section.settings.subtitle | default: 'Mermerci çağırmanıza veya mezar taşını delmenize gerek yoktur. Güçlü dış mekan montaj yapıştırıcısı Selsil Ultra Tack (50ml) siparişinizde opsiyonel olarak (+299 ₺) temin edilebilir.' }}
+      </p>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <!-- Adhesive Card -->
+      <div class="lg:col-span-5 bg-white rounded-2xl overflow-hidden shadow-2xl p-6 text-stone-900 border border-stone-800">
+        <div class="relative aspect-square rounded-xl overflow-hidden bg-stone-100 mb-4 flex items-center justify-center p-3">
+          <img
+            src="{{ 'selsil_ultra_tack.jpg' | asset_url }}"
+            alt="Selsil Ultra Tack 50ml No Nail Montaj Yapıştırıcısı"
+            width="500"
+            height="500"
+            loading="lazy"
+            class="w-full h-full object-contain"
+          >
+          <div class="absolute top-3 left-3 bg-stone-900 text-white text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-md">
+            <span>⚡ 350 kg/m² Anında Tutunma</span>
+          </div>
+        </div>
+
+        <h3 class="font-extrabold text-base text-stone-900">
+          Selsil Ultra Tack Ağır Yük Montaj Yapıştırıcısı (50ml)
+        </h3>
+        <p class="text-xs text-stone-600 mt-1 leading-relaxed">
+          Dış mekan mermer, granit, beton ve taş yüzeyler için özel üretilmiştir. Aşırı yaz sıcaklarında erimez, dondurucu kış şartlarında çatlamaz, neme ve suya %100 dayanıklıdır.
+        </p>
+
+        <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-xs text-stone-700">
+          <span class="flex items-center gap-1 font-semibold text-emerald-700">
+            <span>🛡️</span>
+            <span>Dış Mekan & Donmaya Dayanıklı</span>
+          </span>
+          <span class="text-amber-800 font-bold bg-amber-50 px-2 py-0.5 rounded border border-amber-200">+299 ₺ Opsiyonel</span>
+        </div>
+      </div>
+
+      <!-- 3 Steps -->
+      <div class="lg:col-span-7 space-y-4">
+        <div class="p-5 rounded-2xl bg-stone-800/80 border border-stone-700/80 flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-amber-600 text-white font-black text-lg flex items-center justify-center shrink-0">
+            1
+          </div>
+          <div>
+            <h4 class="font-bold text-stone-100 text-base">Yüzeyi Temizleyin ve Kurulayın</h4>
+            <p class="text-xs text-stone-300 mt-1 leading-relaxed">
+              Mezar baş taşının üst 60x30 cm yapıştırılacak alanındaki toz, yosun veya nemi temiz bir bez ve kolonya/alkol ile silip tamamen kurulayın.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-stone-800/80 border border-stone-700/80 flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-amber-600 text-white font-black text-lg flex items-center justify-center shrink-0">
+            2
+          </div>
+          <div>
+            <h4 class="font-bold text-stone-100 text-base">Selsil Ultra Tack'i Şeritler Halinde Sürün</h4>
+            <p class="text-xs text-stone-300 mt-1 leading-relaxed">
+              Metal plakanın arkasına kenarlardan 1 cm içeride kalacak şekilde dikey şeritler halinde yapıştırıcıyı uygulayın. Noktasal yerine şerit uygulama rüzgar ve sarsıntı direncini artırır.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-stone-800/80 border border-stone-700/80 flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-amber-600 text-white font-black text-lg flex items-center justify-center shrink-0">
+            3
+          </div>
+          <div>
+            <h4 class="font-bold text-stone-100 text-base">30 Saniye Baskı Uygulayarak Sabitleyin</h4>
+            <p class="text-xs text-stone-300 mt-1 leading-relaxed">
+              Plakayı taşa düzgünce hizalayıp 30 saniye boyunca güçlüce bastırın. Anında 350 kg/m² tutunma gücü sayesinde aşağı kaymaz ve vidalama gerekmeden ömür boyu taşla bütünleşir.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Montaj Rehberi",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Başlık",
+      "default": "Matkapsız & Vidasız: 3 Adımda Kolay Montaj"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Açıklama",
+      "default": "Mermerci çağırmanıza veya mezar taşını delmenize gerek yoktur. Güçlü dış mekan montaj yapıştırıcısı Selsil Ultra Tack (50ml) siparişinizde opsiyonel olarak (+299 ₺) temin edilebilir."
+    }
+  ]
+}
+{% endschema %}

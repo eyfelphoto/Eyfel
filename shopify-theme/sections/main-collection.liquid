@@ -1,0 +1,31 @@
+<section class="py-12 bg-stone-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-10">
+      <h1 class="text-3xl sm:text-4xl font-serif font-black text-stone-950">
+        {{ collection.title | default: 'Mezar Plakası Modelleri' }}
+      </h1>
+      {%- if collection.description != blank -%}
+        <p class="text-stone-600 text-sm mt-3 leading-relaxed">
+          {{ collection.description }}
+        </p>
+      {%- endif -%}
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      {%- for product in collection.products -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        <div class="col-span-full text-center py-12 text-stone-500">
+          Bu koleksiyonda henüz ürün bulunmuyor.
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Koleksiyon Sayfası",
+  "settings": []
+}
+{% endschema %}

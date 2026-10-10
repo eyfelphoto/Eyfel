@@ -1,0 +1,101 @@
+{% comment %}
+  Renders a product card for collection grids
+  Accepts:
+  - product: {Object} Product Liquid object
+{% endcomment %}
+{%- assign is_human = false -%}
+{%- if product.tags contains 'insan' or product.type == 'İnsan Mezar Plakası' or product.title contains 'Yetişkin' or product.title contains 'Klasik' or product.title contains 'Oval' or product.title contains 'Dikdörtgen' or product.title contains 'Kare' or product.title contains 'Kalp' or product.title contains 'Yuvarlak' -%}
+  {%- unless product.tags contains 'hayvan' or product.title contains 'Kedi' or product.title contains 'Köpek' or product.title contains 'Can Dost' -%}
+    {%- assign is_human = true -%}
+  {%- endunless -%}
+{%- endif -%}
+
+<div class="product-card group bg-white rounded-2xl overflow-hidden border border-stone-200 hover:border-amber-400 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+  <div class="relative aspect-[4/3] bg-stone-100 overflow-hidden">
+    <a href="{{ product.url }}" class="block w-full h-full">
+      {%- if product.featured_media -%}
+        <img
+          src="{{ product.featured_media | image_url: width: 600 }}"
+          alt="{{ product.title | escape }}"
+          loading="lazy"
+          width="600"
+          height="450"
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        >
+      {%- else -%}
+        {%- if is_human -%}
+          <img
+            src="{{ 'dikdortgen_60x60_model.jpg' | asset_url }}"
+            alt="{{ product.title }}"
+            width="600"
+            height="450"
+            loading="lazy"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          >
+        {%- else -%}
+          <img
+            src="{{ 'hayvan_kare_model.jpg' | asset_url }}"
+            alt="{{ product.title }}"
+            width="600"
+            height="450"
+            loading="lazy"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          >
+        {%- endif -%}
+      {%- endif -%}
+    </a>
+
+    <!-- Badge: Human vs Pet -->
+    <div class="absolute top-3 right-3 bg-white/95 backdrop-blur-md text-stone-800 text-[10px] font-bold px-2 py-1 rounded-md shadow-xs border border-stone-200">
+      {%- if is_human -%}
+        <span class="text-amber-700">📷 Sadece Fotoğraf Baskısı</span>
+      {%- else -%}
+        <span class="text-emerald-700">🐾 4 Şekil Seçenekli</span>
+      {%- endif -%}
+    </div>
+
+    <!-- Guarantee Badge -->
+    {%- if settings.show_guarantee_badge_on_cards -%}
+      <div class="absolute bottom-3 right-3 bg-stone-900/90 backdrop-blur-md text-white text-[10px] font-semibold px-2.5 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+        <span class="text-emerald-400">🛡️</span>
+        <span>10 Yıl Solmama Garantisi</span>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="p-5 flex-1 flex flex-col justify-between">
+    <div>
+      <div class="text-[11px] font-bold text-amber-700 uppercase tracking-wider mb-1">
+        {%- if is_human -%}
+          60x60 Mezar Taşı Üst 60x30 Boş Alanı İçin
+        {%- else -%}
+          Can Dostlarımız İçin Özel Anma Plakası
+        {%- endif -%}
+      </div>
+      <h3 class="text-base sm:text-lg font-bold text-stone-900 group-hover:text-amber-700 transition-colors">
+        <a href="{{ product.url }}">{{ product.title }}</a>
+      </h3>
+      <p class="text-xs text-stone-600 mt-1 line-clamp-2 leading-relaxed">
+        {{ product.description | strip_html | truncate: 120 }}
+      </p>
+
+      <div class="mt-3 pt-2.5 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-500">
+        <span>Vidasız & Matkapsız Kolay Montaj</span>
+        <span class="text-amber-800 font-medium">Opsiyonel Selsil Ultra</span>
+      </div>
+    </div>
+
+    <div class="mt-4 pt-4 border-t border-stone-100 flex items-center justify-between gap-3">
+      <div>
+        <span class="text-[10px] text-stone-400 block font-medium">Başlangıç Fiyatı</span>
+        {% render 'price', product: product %}
+      </div>
+      <a
+        href="{{ product.url }}"
+        class="inline-flex items-center justify-center px-4 py-2.5 bg-stone-900 hover:bg-amber-600 text-white text-xs font-bold rounded-xl transition-all shadow-xs"
+      >
+        Özelleştir & Satın Al
+      </a>
+    </div>
+  </div>
+</div>

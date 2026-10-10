@@ -1,0 +1,71 @@
+<section id="modeller" class="py-16 bg-stone-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="inline-flex items-center gap-2 bg-amber-100 text-amber-900 text-xs uppercase px-3 py-1 rounded-full font-bold tracking-wider mb-3">
+        <span>Kalıcı Hatıralar</span>
+      </div>
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-serif font-black text-stone-950">
+        {{ section.settings.title | default: 'Mezar Plakası Modelleri & Fiyatları' }}
+      </h2>
+      <p class="text-stone-600 text-sm sm:text-base mt-3 leading-relaxed">
+        {{ section.settings.subtitle | default: 'Beyaz metal zemin üzerine UV lak kaplamalı baskı. İnsan modellerinde mermer üstü sadece fotoğraf baskısı; can dostu modellerimizde 4 şekil ve yazı seçeneği.' }}
+      </p>
+    </div>
+
+    <!-- Products Grid -->
+    {%- assign collection = section.settings.collection -%}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      {%- if collection != blank and collection.products.size > 0 -%}
+        {%- for product in collection.products limit: section.settings.products_to_show -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Fallback Default Showcase Items if Shopify store has not populated products yet -->
+        {%- for product in collections.all.products limit: 6 -%}
+          {% render 'product-card', product: product %}
+        {%- else -%}
+          <!-- Clean Placeholder Cards -->
+          <div class="col-span-full text-center py-12 bg-white rounded-2xl border border-stone-200 p-8">
+            <h3 class="text-lg font-bold text-stone-800">Shopify Ürünlerinizi Bu Koleksiyona Ekleyin</h3>
+            <p class="text-sm text-stone-500 mt-2">Tema düzenleyicisinden (Özelleştir) bir koleksiyon seçerek ürünlerinizi görüntüleyebilirsiniz.</p>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Öne Çıkan Modeller",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Bölüm Başlığı",
+      "default": "Mezar Plakası Modelleri & Fiyatları"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Bölüm Açıklaması",
+      "default": "Beyaz metal zemin üzerine UV lak kaplamalı baskı. İnsan modellerinde mermer üstü sadece fotoğraf baskısı; can dostu modellerimizde 4 şekil ve yazı seçeneği."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Gösterilecek Koleksiyon"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Gösterilecek Ürün Sayısı",
+      "default": 6
+    }
+  ]
+}
+{% endschema %}

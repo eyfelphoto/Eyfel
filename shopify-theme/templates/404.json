@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main_404": {
+      "type": "featured-products",
+      "settings": {
+        "title": "Sayfa Bulunamadı - Öne Çıkan Modellerimiz",
+        "subtitle": "Aradığınız sayfa bulunamadı. Aşağıdaki popüler mezar plakası modellerimizi inceleyebilirsiniz."
+      }
+    }
+  },
+  "order": [
+    "main_404"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main_page": {
+      "type": "featured-products",
+      "settings": {
+        "title": "Eyfel Mezar Plakaları",
+        "subtitle": "10 yıl garantili, vidasız ve deliksiz kolay montaj mezar plakaları."
+      }
+    }
+  },
+  "order": [
+    "main_page"
+  ]
+}

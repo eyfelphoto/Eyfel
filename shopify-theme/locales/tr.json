@@ -1,0 +1,57 @@
+{
+  "general": {
+    "store_name": "Eyfel Mezar Plakaları",
+    "search": "Ürün veya model ara...",
+    "cart": "Sepet",
+    "menu": "Menü",
+    "close": "Kapat",
+    "currency_symbol": "₺",
+    "save": "İndirim",
+    "guarantee": "10 Yıl Solmama Garantisi"
+  },
+  "header": {
+    "announcement": "10 Yıl Açık Hava Solmama Garantisi • Vidasız & Matkapsız Kolay Montaj • Opsiyonel Selsil Ultra Tack",
+    "call_us": "WhatsApp Destek",
+    "cart_count": "{{ count }} Ürün"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Sepete Ekle",
+      "sold_out": "Tükendi",
+      "unavailable": "Mevcut Değil",
+      "select_size": "Ölçü Seçin",
+      "select_shape": "Model Formu Seçin",
+      "photo_upload": "Baskı Fotoğrafı Yükleyin",
+      "photo_upload_hint": "JPG, PNG, WebP formatında yüksek kaliteli fotoğraf yükleyiniz.",
+      "special_notes": "Grafik Ekibine Notunuz",
+      "pet_name": "Can Dostunuzun Adı",
+      "pet_dates": "Tarihler (Örn: 2014 - 2024)",
+      "only_photo_badge": "Sadece Fotoğraf Baskısı",
+      "four_shapes_badge": "4 Şekil Seçenekli"
+    },
+    "glue_addon": {
+      "badge": "Önerilen Montaj Ürünü",
+      "title": "Selsil Ultra Tack Montaj Yapıştırıcısı (50ml)",
+      "price": "+299 ₺",
+      "desc": "Mermer, taş ve dış mekan yüzeylerine delme veya vidaya gerek olmadan ultra güçlü anında yapışma sağlar.",
+      "add_checkbox": "Siparişime Selsil Ultra Tack Ekle (+299 ₺)",
+      "added": "✓ Sepete Eklendi (+299 ₺)"
+    }
+  },
+  "cart": {
+    "title": "Alışveriş Sepetiniz",
+    "empty": "Sepetiniz henüz boş.",
+    "subtotal": "Ara Toplam",
+    "shipping_note": "Kargo ve vergiler ödeme adımında hesaplanır.",
+    "checkout": "Siparişi Tamamla",
+    "continue_shopping": "Alışverişe Devam Et",
+    "remove": "Kaldır",
+    "note": "Sipariş Notu Ekleyin"
+  },
+  "guide": {
+    "title": "Matkapsız & Vidasız 3 Adımda Kolay Montaj",
+    "step_1": "1. Yüzeyi Temizleyin ve Kurulayın",
+    "step_2": "2. Selsil Ultra Tack Yapıştırıcıyı Şeritler Halinde Sürün",
+    "step_3": "3. 30 Saniye Baskı Uygulayarak Sabitleyin"
+  }
+}

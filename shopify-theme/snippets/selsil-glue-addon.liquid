@@ -1,0 +1,56 @@
+{% comment %}
+  Renders Selsil Ultra Tack 50ml Optional Mounting Glue Add-on
+  Parameters:
+  - form_id: Form ID to attach checkbox to
+{% endcomment %}
+{%- assign glue_price = settings.selsil_glue_price | default: 299 -%}
+{%- assign glue_title = settings.selsil_glue_title | default: 'Selsil Ultra Tack Montaj Yapıştırıcısı (50ml)' -%}
+{%- assign glue_desc = settings.selsil_glue_desc | default: 'Mermer, taş ve dış mekan yüzeylerine delme veya vidaya gerek olmadan ultra güçlü anında yapışma sağlar. Suya, kara ve güneşe 10 yıl tam dayanıklıdır.' -%}
+
+<div class="selsil-glue-addon-card p-4 rounded-xl border border-stone-200 bg-white hover:border-amber-400 transition-all shadow-xs my-4" data-selsil-addon>
+  <div class="flex items-start gap-3.5">
+    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-stone-50 rounded-xl border border-stone-200 p-1 shrink-0 overflow-hidden flex items-center justify-center">
+      <img
+        src="{{ 'selsil_ultra_tack.jpg' | asset_url }}"
+        alt="{{ glue_title }}"
+        width="80"
+        height="80"
+        loading="lazy"
+        class="w-full h-full object-contain"
+      >
+    </div>
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center gap-2 flex-wrap mb-1">
+        <span class="text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-900 px-2 py-0.5 rounded">
+          Önerilen Montaj Ürünü
+        </span>
+        <span class="text-[10px] font-semibold text-stone-500">
+          50 ml • 350 kg/m² Anında Tutunma
+        </span>
+      </div>
+      <h4 class="font-bold text-stone-900 text-sm">
+        {{ glue_title }}
+      </h4>
+      <p class="text-xs text-stone-600 mt-0.5 leading-relaxed">
+        {{ glue_desc }}
+      </p>
+      <div class="mt-2.5 flex items-center justify-between flex-wrap gap-2">
+        <span class="text-sm font-extrabold text-amber-900">
+          +{{ glue_price }} ₺
+        </span>
+        <label class="inline-flex items-center gap-2 cursor-pointer select-none bg-stone-100 hover:bg-stone-200 px-3 py-1.5 rounded-lg transition-colors">
+          <input
+            type="checkbox"
+            name="properties[Selsil Ultra Tack 50ml Yapıştırıcı (+299 TL)]"
+            value="Evet (+299 TL)"
+            data-addon-price="{{ glue_price }}"
+            class="selsil-glue-checkbox w-4 h-4 rounded text-amber-600 focus:ring-amber-500 accent-amber-600 cursor-pointer"
+          >
+          <span class="text-xs font-bold text-stone-900 checkbox-label-text">
+            + Sepete Ekle (+{{ glue_price }} ₺)
+          </span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

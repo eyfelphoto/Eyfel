@@ -1,0 +1,101 @@
+<section class="hero-section relative py-16 sm:py-24 bg-gradient-to-b from-stone-950 via-stone-900 to-stone-950 text-white overflow-hidden">
+  <!-- Subtle decorative background blur -->
+  <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-amber-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+    <!-- Guarantee Badge Pill -->
+    <div class="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 to-amber-600/10 border border-amber-500/30 px-4 py-1.5 rounded-full text-xs font-bold text-amber-300 mb-6 shadow-sm">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span>{{ section.settings.pill_text | default: '10 Yıl Açık Hava Solmama Garantisi' }}</span>
+    </div>
+
+    <!-- Main Title -->
+    <h1 class="text-3xl sm:text-5xl md:text-6xl font-serif font-black tracking-tight max-w-4xl mx-auto leading-tight text-stone-100">
+      {{ section.settings.heading | default: 'Mezar Taşları İçin 10 Yıl Garantili Beyaz Metal UV Baskı Plakaları' }}
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="text-base sm:text-xl text-stone-300 max-w-2xl mx-auto mt-6 leading-relaxed">
+      {{ section.settings.subheading | default: 'Mermerci veya matkap gerektirmez. Dış mekan şartlarına, güneşin UV ışınlarına, dona ve yağmura 10 yıl tam dayanıklı pürüzsüz beyaz metal anma plakası.' }}
+    </p>
+
+    <!-- CTAs -->
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+      <a
+        href="#modeller"
+        class="px-7 py-4 bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-sm rounded-xl transition-all shadow-lg hover:shadow-amber-600/30 flex items-center gap-2"
+      >
+        <span>Modelleri İnceleyin & Sipariş Verin</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </a>
+
+      <a
+        href="#montaj-rehberi"
+        class="px-6 py-4 bg-stone-800/80 hover:bg-stone-800 text-stone-200 border border-stone-700 font-bold text-sm rounded-xl transition-all flex items-center gap-2"
+      >
+        <span>Vidasız Montaj Rehberi</span>
+      </a>
+    </div>
+
+    <!-- 3 Key Value Props -->
+    <div class="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto text-left">
+      <div class="p-4 rounded-xl bg-stone-900/60 border border-stone-800 backdrop-blur-xs flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-lg shrink-0">
+          ☀️
+        </div>
+        <div>
+          <h4 class="font-bold text-xs text-stone-200">10 Yıl UV Koruma</h4>
+          <p class="text-[11px] text-stone-400">Solmaz, kararmaz, çatlamaz</p>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-stone-900/60 border border-stone-800 backdrop-blur-xs flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-lg shrink-0">
+          🧰
+        </div>
+        <div>
+          <h4 class="font-bold text-xs text-stone-200">Vidasız Kolay Montaj</h4>
+          <p class="text-[11px] text-stone-400">Delme gerektirmez, doğrudan yapışır</p>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-stone-900/60 border border-stone-800 backdrop-blur-xs flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-lg shrink-0">
+          🧪
+        </div>
+        <div>
+          <h4 class="font-bold text-xs text-stone-200">Opsiyonel Selsil Ultra</h4>
+          <p class="text-[11px] text-stone-400">+299 ₺ ile profesyonel yapıştırıcı</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "pill_text",
+      "label": "Üst Rozet Metni",
+      "default": "10 Yıl Açık Hava Solmama Garantisi"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Ana Başlık",
+      "default": "Mezar Taşları İçin 10 Yıl Garantili Beyaz Metal UV Baskı Plakaları"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Alt Başlık",
+      "default": "Mermerci veya matkap gerektirmez. Dış mekan şartlarına, güneşin UV ışınlarına, dona ve yağmura 10 yıl tam dayanıklı pürüzsüz beyaz metal anma plakası."
+    }
+  ]
+}
+{% endschema %}

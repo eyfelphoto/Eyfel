@@ -1,0 +1,72 @@
+<section id="sss" class="py-16 bg-stone-50">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <div class="inline-flex items-center gap-2 bg-stone-200 text-stone-800 text-xs uppercase px-3 py-1 rounded-full font-bold tracking-wider mb-3">
+        <span>Merak Edilenler</span>
+      </div>
+      <h2 class="text-2xl sm:text-3xl font-serif font-black text-stone-950">
+        {{ section.settings.title | default: 'Sıkça Sorulan Sorular' }}
+      </h2>
+    </div>
+
+    <div class="space-y-4" id="FaqAccordion">
+      <!-- FAQ 1 -->
+      <details class="bg-white rounded-xl border border-stone-200 p-5 group open:border-amber-400">
+        <summary class="font-bold text-sm sm:text-base text-stone-900 cursor-pointer flex items-center justify-between list-none">
+          <span>Plakalar açık havada solma yapar mı? 10 yıl garanti neleri kapsar?</span>
+          <span class="text-amber-600 font-bold group-open:rotate-180 transition-transform">▾</span>
+        </summary>
+        <p class="text-xs sm:text-sm text-stone-600 mt-3 leading-relaxed border-t border-stone-100 pt-3">
+          Hayır. Plakalarımız endüstriyel UV lak koruyucu kaplamalı beyaz alüminyum metal üzerine basılmaktadır. Doğrudan güneş ışığı, don, kar ve aşırı sıcaklara karşı 10 yıl boyunca renk solmama, dökülmeme ve sararmama garantimiz mevcuttur.
+        </p>
+      </details>
+
+      <!-- FAQ 2 -->
+      <details class="bg-white rounded-xl border border-stone-200 p-5 group open:border-amber-400">
+        <summary class="font-bold text-sm sm:text-base text-stone-900 cursor-pointer flex items-center justify-between list-none">
+          <span>Mezar taşına nasıl yapıştırılır? Yanında yapıştırıcı gönderiyor musunuz?</span>
+          <span class="text-amber-600 font-bold group-open:rotate-180 transition-transform">▾</span>
+        </summary>
+        <p class="text-xs sm:text-sm text-stone-600 mt-3 leading-relaxed border-t border-stone-100 pt-3">
+          Metal plakalarımız vida deliği veya delme işlemi gerektirmez; taş yüzeye sıfır şekilde yapıştırılır. Dış mekan mermer/taş için özel üretilmiş 350 kg/m² tutunma gücüne sahip <strong>Selsil Ultra Tack Montaj Yapıştırıcısını (50ml)</strong> siparişinize +299 TL karşılığında opsiyonel olarak ekleyebilirsiniz.
+        </p>
+      </details>
+
+      <!-- FAQ 3 -->
+      <details class="bg-white rounded-xl border border-stone-200 p-5 group open:border-amber-400">
+        <summary class="font-bold text-sm sm:text-base text-stone-900 cursor-pointer flex items-center justify-between list-none">
+          <span>İnsan mezar modellerinde plaka üzerine isim veya dua yazılıyor mu?</span>
+          <span class="text-amber-600 font-bold group-open:rotate-180 transition-transform">▾</span>
+        </summary>
+        <p class="text-xs sm:text-sm text-stone-600 mt-3 leading-relaxed border-t border-stone-100 pt-3">
+          Hayır. İnsan mezarlarında plaka üzerine sadece yüksek kaliteli fotoğraf baskısı yapılmaktadır. İsim, tarihler ve dua mermer ustası tarafından taşın alt kısmına kazınmaktadır. Plakanız taşın üst 60x30 cm boşluk alanına mezar fotoğrafı olarak yapıştırılır.
+        </p>
+      </details>
+
+      <!-- FAQ 4 -->
+      <details class="bg-white rounded-xl border border-stone-200 p-5 group open:border-amber-400">
+        <summary class="font-bold text-sm sm:text-base text-stone-900 cursor-pointer flex items-center justify-between list-none">
+          <span>Eski veya kalitesiz bir vesikalık fotoğraf göndersem basılabilir mi?</span>
+          <span class="text-amber-600 font-bold group-open:rotate-180 transition-transform">▾</span>
+        </summary>
+        <p class="text-xs sm:text-sm text-stone-600 mt-3 leading-relaxed border-t border-stone-100 pt-3">
+          Evet. Deneyimli grafik tasarım ekibimiz eski, yıpranmış veya vesikalık fotoğrafları yapay zeka ve profesyonel restorasyon araçlarıyla yüksek çözünürlüğe kavuşturur, çizikleri temizler ve en net baskı sonucunu elde eder.
+        </p>
+      </details>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Sıkça Sorulan Sorular",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Başlık",
+      "default": "Sıkça Sorulan Sorular"
+    }
+  ]
+}
+{% endschema %}

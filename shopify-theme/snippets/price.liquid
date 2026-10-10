@@ -1,0 +1,31 @@
+{% comment %}
+  Renders a list of product's price (regular, sale)
+  Accepts:
+  - product: {Object} Product Liquid object
+  - use_variant: {Boolean} Renders selected or first variant price
+{% endcomment %}
+{%- liquid
+  if use_variant
+    assign target = product.selected_or_first_available_variant
+  else
+    assign target = product
+  endif
+
+  assign compare_at_price = target.compare_at_price
+  assign price = target.price | default: 1990
+  assign available = target.available | default: true
+-%}
+
+<div class="price-container flex items-baseline gap-2">
+  <span class="price-current text-xl font-extrabold text-stone-900">
+    {{ price | money }}
+  </span>
+  {%- if compare_at_price > price -%}
+    <s class="price-compare text-sm text-stone-400 line-through">
+      {{ compare_at_price | money }}
+    </s>
+    <span class="badge-discount text-[11px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">
+      İndirim
+    </span>
+  {%- endif -%}
+</div>

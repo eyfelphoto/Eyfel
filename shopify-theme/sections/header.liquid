@@ -1,0 +1,107 @@
+{%- liquid
+  assign announcement_text = section.settings.announcement_text | default: '10 Yıl Açık Hava Solmama Garantisi • Vidasız & Matkapsız Kolay Montaj • Opsiyonel Selsil Ultra Tack'
+  assign phone = section.settings.support_phone | default: '0850 123 45 67'
+  assign whatsapp = settings.whatsapp_number | default: '905551234567'
+-%}
+
+<header class="site-header sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200">
+  <!-- Top Announcement Bar -->
+  {%- if section.settings.show_announcement -%}
+    <div class="announcement-bar bg-stone-900 text-stone-200 text-xs py-2 px-4">
+      <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+        <div class="flex items-center gap-2 overflow-hidden truncate">
+          <span class="inline-block w-2 h-2 rounded-full bg-amber-500 shrink-0"></span>
+          <span class="truncate">{{ announcement_text }}</span>
+        </div>
+        <div class="hidden sm:flex items-center gap-4 text-xs font-semibold shrink-0">
+          <a href="https://wa.me/{{ whatsapp }}" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300 flex items-center gap-1.5 transition-colors">
+            <span>WhatsApp Destek Hattı</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <!-- Main Navigation Bar -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-18 sm:h-20 gap-4">
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+        <a href="/" class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-stone-900 to-stone-800 flex items-center justify-center text-amber-500 font-serif font-bold text-xl shadow-md border border-stone-700">
+            E
+          </div>
+          <div>
+            <span class="font-serif font-black text-xl tracking-tight text-stone-950 block leading-tight">
+              EYFEL
+            </span>
+            <span class="text-[10px] tracking-widest text-amber-700 font-bold uppercase block">
+              Mezar Plakaları
+            </span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-stone-700">
+        <a href="/#modeller" class="hover:text-amber-700 transition-colors">Modeller & Fiyatlar</a>
+        <a href="/#mezar-tasi-uyarisi" class="hover:text-amber-700 transition-colors">60x60 Mezar Taşı</a>
+        <a href="/#montaj-rehberi" class="hover:text-amber-700 transition-colors">Vidasız Montaj</a>
+        <a href="/#yorumlar" class="hover:text-amber-700 transition-colors">Müşteri Yorumları</a>
+        <a href="/#sss" class="hover:text-amber-700 transition-colors">Sıkça Sorulanlar</a>
+      </nav>
+
+      <!-- Actions (Cart & WhatsApp) -->
+      <div class="flex items-center gap-3">
+        <a
+          href="https://wa.me/{{ whatsapp }}"
+          target="_blank"
+          rel="noopener"
+          class="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-50 text-emerald-800 hover:bg-emerald-100 text-xs font-bold border border-emerald-200 transition-all"
+        >
+          <span>WhatsApp Sipariş</span>
+        </a>
+
+        <!-- Cart Drawer Trigger Button -->
+        <button
+          type="button"
+          class="cart-drawer-trigger relative p-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 transition-colors flex items-center gap-2"
+          aria-label="Sepeti Aç"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+          </svg>
+          <span class="cart-count-badge bg-amber-600 text-white text-[11px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center">
+            {{ cart.item_count }}
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header & Duyuru",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Üst Duyuru Bandını Göster",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Duyuru Metni",
+      "default": "10 Yıl Açık Hava Solmama Garantisi • Vidasız & Matkapsız Kolay Montaj • Opsiyonel Selsil Ultra Tack"
+    },
+    {
+      "type": "text",
+      "id": "support_phone",
+      "label": "Destek Telefonu",
+      "default": "0850 123 45 67"
+    }
+  ]
+}
+{% endschema %}

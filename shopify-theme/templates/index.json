@@ -1,0 +1,53 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "pill_text": "10 Yıl Açık Hava Solmama Garantisi",
+        "heading": "Mezar Taşları İçin 10 Yıl Garantili Beyaz Metal UV Baskı Plakaları",
+        "subheading": "Mermerci veya matkap gerektirmez. Dış mekan şartlarına, güneşin UV ışınlarına, dona ve yağmura 10 yıl tam dayanıklı pürüzsüz beyaz metal anma plakası."
+      }
+    },
+    "marble_notice": {
+      "type": "marble-notice",
+      "settings": {
+        "title": "Standart Mezar Taşı Ölçüsü: 60x60 cm"
+      }
+    },
+    "featured_products": {
+      "type": "featured-products",
+      "settings": {
+        "title": "Mezar Plakası Modelleri & Fiyatları",
+        "subtitle": "Beyaz metal zemin üzerine UV lak kaplamalı baskı. İnsan modellerinde mermer üstü sadece fotoğraf baskısı; can dostu modellerimizde 4 şekil ve yazı seçeneği.",
+        "products_to_show": 6
+      }
+    },
+    "installation_guide": {
+      "type": "installation-guide",
+      "settings": {
+        "title": "Matkapsız & Vidasız: 3 Adımda Kolay Montaj",
+        "subtitle": "Mermerci çağırmanıza veya mezar taşını delmenize gerek yoktur. Güçlü dış mekan montaj yapıştırıcısı Selsil Ultra Tack (50ml) siparişinizde opsiyonel olarak (+299 ₺) temin edilebilir."
+      }
+    },
+    "reviews": {
+      "type": "customer-reviews",
+      "settings": {
+        "title": "Müşterilerimizin Deneyimleri"
+      }
+    },
+    "faq": {
+      "type": "faq-section",
+      "settings": {
+        "title": "Sıkça Sorulan Sorular"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "marble_notice",
+    "featured_products",
+    "installation_guide",
+    "reviews",
+    "faq"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "current": {
+    "logo_width": 180,
+    "color_primary": "#d97706",
+    "color_dark": "#171717",
+    "color_text": "#1c1917",
+    "color_guarantee": "#059669",
+    "enable_selsil_addon": true,
+    "selsil_glue_price": 299,
+    "selsil_glue_title": "Selsil Ultra Tack Montaj Yapıştırıcısı (50ml)",
+    "selsil_glue_desc": "Mermer, taş ve dış mekan yüzeylerine delme veya vidaya gerek olmadan ultra güçlü anında yapışma sağlar. Suya, kara ve güneşe 10 yıl tam dayanıklıdır.",
+    "guarantee_title": "10 Yıl Açık Hava Solmama Garantisi",
+    "guarantee_subtitle": "UV Lak Kaplamalı Beyaz Alüminyum Metal Üzerine Yüksek Çözünürlüklü Baskı",
+    "show_guarantee_badge_on_cards": true,
+    "show_marble_notice": true,
+    "marble_notice_title": "Standart Mezar Taşı Ölçüsü: 60x60 cm",
+    "marble_notice_text": "Türkiye mezarlıklarındaki standart mezar baş taşları 60x60 cm ölçüsündedir. Plakalarımız taş ustasının isim kazıması yaptığı alt bölümü kapatmayacak şekilde üst 60x30 cm alana doğrudan yapıştırılmaktadır.",
+    "whatsapp_number": "905551234567",
+    "whatsapp_message_prefix": "Merhaba, Eyfel Mezar Plakaları hakkında bilgi ve fotoğraf kontrolü için yazıyorum.",
+    "support_working_hours": "Haftanın 7 günü 09:00 - 22:00"
+  }
+}

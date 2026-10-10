@@ -1,0 +1,60 @@
+<section id="mezar-tasi-uyarisi" class="py-12 bg-amber-50/60 border-y border-amber-200/70">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-amber-200 flex flex-col lg:flex-row items-center gap-8">
+      <!-- Headstone Illustration / Photo -->
+      <div class="w-full lg:w-1/3 shrink-0">
+        <div class="relative rounded-xl overflow-hidden border border-stone-300 shadow-md bg-stone-100 aspect-square flex items-center justify-center">
+          <img
+            src="{{ 'mezar_tasi_60x60.jpg' | asset_url }}"
+            alt="60x60 Mezar Taşı 60x30 Üst Boşluk Yerleşimi"
+            width="500"
+            height="500"
+            loading="lazy"
+            class="w-full h-full object-cover"
+          >
+          <div class="absolute top-2 left-2 bg-stone-900/90 text-white text-[10px] font-bold px-2 py-1 rounded">
+            60x60 cm Standart Baş Taşı
+          </div>
+          <div class="absolute bottom-2 right-2 bg-amber-600 text-white text-[10px] font-bold px-2 py-1 rounded shadow">
+            Üst 60x30 cm Boş Alan
+          </div>
+        </div>
+      </div>
+
+      <!-- Text Explanation -->
+      <div class="flex-1 min-w-0">
+        <div class="inline-flex items-center gap-2 text-xs font-bold text-amber-900 bg-amber-100 px-3 py-1 rounded-full mb-3 uppercase tracking-wider">
+          <span>⚠️ Önemli Bilgilendirme</span>
+        </div>
+        <h2 class="text-xl sm:text-2xl font-serif font-black text-stone-950 mb-3">
+          {{ section.settings.title | default: 'Standart Mezar Taşı Ölçüsü: 60x60 cm' }}
+        </h2>
+        <div class="space-y-3 text-sm text-stone-700 leading-relaxed">
+          <p>
+            Türkiye genelindeki mezarlıklarda yer alan standart dik mezar baş taşları <strong>60x60 cm</strong> boyutlarındadır.
+          </p>
+          <p>
+            Taş ustaları isim, doğum/ölüm tarihleri ve duaları taşın alt yarısına kazımaktadır. Baş taşının üst tarafında kalan <strong>60x30 cm boş alan</strong>, mezar fotoğraf plakası için ayrılmıştır.
+          </p>
+          <p class="font-semibold text-stone-900 bg-amber-50/80 p-3 rounded-lg border border-amber-200">
+            📌 Plakalarımız vida deliği içermez; delme yapmadan güçlü dış mekan yapıştırıcısı (Selsil Ultra Tack vb.) ile mermer yüzeye sıfır şekilde pürüzsüz yapıştırılır.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "60x60 Mezar Taşı Uyarısı",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Başlık",
+      "default": "Standart Mezar Taşı Ölçüsü: 60x60 cm"
+    }
+  ]
+}
+{% endschema %}

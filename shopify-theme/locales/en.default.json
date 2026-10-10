@@ -1,0 +1,51 @@
+{
+  "general": {
+    "store_name": "Eyfel Memorial Plates",
+    "search": "Search products...",
+    "cart": "Cart",
+    "menu": "Menu",
+    "close": "Close",
+    "currency_symbol": "₺",
+    "save": "Save",
+    "guarantee": "10-Year Weatherproof Guarantee"
+  },
+  "header": {
+    "announcement": "10-Year Outdoor Fade-Proof Guarantee • Drill-Free & Screw-Free Installation • Optional Selsil Ultra Tack",
+    "call_us": "WhatsApp Support",
+    "cart_count": "{{ count }} Items"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to Cart",
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable",
+      "select_size": "Select Size",
+      "select_shape": "Select Shape",
+      "photo_upload": "Upload Photo for UV Print",
+      "photo_upload_hint": "Upload high resolution JPG, PNG or WebP.",
+      "special_notes": "Special Instructions for Design Team",
+      "pet_name": "Pet Name",
+      "pet_dates": "Dates",
+      "only_photo_badge": "Photo Print Service Only",
+      "four_shapes_badge": "4 Shapes Available"
+    },
+    "glue_addon": {
+      "badge": "Recommended Adhesive",
+      "title": "Selsil Ultra Tack Heavy Duty Mounting Glue (50ml)",
+      "price": "+299 ₺",
+      "desc": "Ultra high tack mounting glue without screws or drilling.",
+      "add_checkbox": "Add Selsil Ultra Tack (+299 ₺)",
+      "added": "✓ Added to Cart (+299 ₺)"
+    }
+  },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty.",
+    "subtotal": "Subtotal",
+    "shipping_note": "Shipping calculated at checkout.",
+    "checkout": "Proceed to Checkout",
+    "continue_shopping": "Continue Shopping",
+    "remove": "Remove",
+    "note": "Order Note"
+  }
+}

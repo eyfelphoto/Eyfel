@@ -1,0 +1,87 @@
+<footer class="bg-stone-950 text-stone-300 pt-16 pb-10 border-t border-stone-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+      <!-- Brand & Mission -->
+      <div class="space-y-3">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-stone-800 flex items-center justify-center text-amber-500 font-serif font-bold text-lg border border-stone-700">
+            E
+          </div>
+          <span class="font-serif font-black text-xl text-stone-100">EYFEL</span>
+        </div>
+        <p class="text-xs text-stone-400 leading-relaxed">
+          Ebedi hatıralarınız için 10 yıl garantili, UV koruyucu lak kaplamalı, matkapsız ve vidasız monte edilen profesyonel mezar fotoğraf plakaları.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="font-bold text-stone-100 text-sm mb-3">Hızlı Bağlantılar</h4>
+        <ul class="space-y-2 text-xs text-stone-400">
+          <li><a href="/#modeller" class="hover:text-amber-400 transition-colors">Plaka Modelleri</a></li>
+          <li><a href="/#mezar-tasi-uyarisi" class="hover:text-amber-400 transition-colors">60x60 Mezar Taşı Uyarısı</a></li>
+          <li><a href="/#montaj-rehberi" class="hover:text-amber-400 transition-colors">Vidasız Montaj Rehberi</a></li>
+          <li><a href="/#yorumlar" class="hover:text-amber-400 transition-colors">Müşteri Yorumları</a></li>
+          <li><a href="/#sss" class="hover:text-amber-400 transition-colors">Sıkça Sorulan Sorular</a></li>
+        </ul>
+      </div>
+
+      <!-- Guarantees -->
+      <div>
+        <h4 class="font-bold text-stone-100 text-sm mb-3">Güven & Taahhüt</h4>
+        <ul class="space-y-2 text-xs text-stone-400">
+          <li class="flex items-center gap-2">
+            <span class="text-emerald-400">✓</span>
+            <span>10 Yıl Açık Hava Solmama Garantisi</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-emerald-400">✓</span>
+            <span>UV Koruyucu Vernik Kaplama</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-emerald-400">✓</span>
+            <span>Vidasız & Mermeri Delmeden Montaj</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-emerald-400">✓</span>
+            <span>Selsil Ultra Tack (+299 ₺) Opsiyonu</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h4 class="font-bold text-stone-100 text-sm mb-3">İletişim & Destek</h4>
+        <p class="text-xs text-stone-400">
+          Fotoğraf uygunluk kontrolü veya özel talepleriniz için WhatsApp üzerinden bize dilediğiniz an yazabilirsiniz.
+        </p>
+        <div class="mt-4">
+          <a
+            href="https://wa.me/{{ settings.whatsapp_number | default: '905551234567' }}"
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition-all shadow-sm"
+          >
+            <span>WhatsApp Sipariş Hattı</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Copyright -->
+    <div class="border-t border-stone-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500">
+      <p>&copy; {{ 'now' | date: '%Y' }} Eyfel Mezar Plakaları. Tüm hakları saklıdır.</p>
+      <div class="flex items-center gap-4">
+        <span>🔒 256-bit SSL Güvenli Alışveriş</span>
+        <span>🚚 Ücretsiz Kargo</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": []
+}
+{% endschema %}

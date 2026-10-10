@@ -1,0 +1,84 @@
+<div id="CartDrawer" class="cart-drawer-overlay fixed inset-0 z-50 bg-black/60 backdrop-blur-xs opacity-0 pointer-events-none transition-opacity duration-300" aria-hidden="true">
+  <div class="cart-drawer-panel fixed top-0 right-0 bottom-0 w-full max-w-md bg-white shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out">
+    <!-- Header -->
+    <div class="p-5 border-b border-stone-200 flex items-center justify-between bg-stone-50">
+      <div class="flex items-center gap-2">
+        <h3 class="font-extrabold text-stone-900 text-lg">Alışveriş Sepeti</h3>
+        <span class="cart-drawer-count bg-amber-100 text-amber-900 text-xs font-bold px-2 py-0.5 rounded-full">
+          {{ cart.item_count }}
+        </span>
+      </div>
+      <button type="button" class="cart-drawer-close p-2 text-stone-400 hover:text-stone-700 rounded-lg" aria-label="Kapat">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Items List -->
+    <div class="flex-1 overflow-y-auto p-5 space-y-4 cart-drawer-items">
+      {%- if cart.item_count == 0 -%}
+        <div class="text-center py-12 text-stone-500">
+          <p class="text-base font-semibold">Sepetiniz şu anda boş.</p>
+          <p class="text-xs mt-1">Mezar plakası modellerimizi inceleyip sepetinize ekleyebilirsiniz.</p>
+        </div>
+      {%- else -%}
+        {%- for item in cart.items -%}
+          <div class="flex gap-4 p-3 bg-stone-50 rounded-xl border border-stone-200" data-cart-item-key="{{ item.key }}">
+            <div class="w-16 h-16 rounded-lg overflow-hidden bg-white border border-stone-200 shrink-0">
+              {%- if item.image -%}
+                <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title }}" class="w-full h-full object-cover">
+              {%- endif -%}
+            </div>
+            <div class="flex-1 min-w-0">
+              <h4 class="font-bold text-sm text-stone-900 truncate">{{ item.product.title }}</h4>
+              <p class="text-xs text-stone-500 mt-0.5">{{ item.variant.title }}</p>
+
+              <!-- Custom Properties (Adhesive, Photo, Engraving) -->
+              {%- for property in item.properties -%}
+                {%- unless property.last == blank -%}
+                  <div class="text-[11px] text-stone-600 mt-0.5">
+                    <span class="font-semibold text-amber-900">{{ property.first }}:</span> {{ property.last }}
+                  </div>
+                {%- endunless -%}
+              {%- endfor -%}
+
+              <div class="mt-2 flex items-center justify-between">
+                <span class="text-xs font-bold text-stone-900">{{ item.final_line_price | money }}</span>
+                <a href="/cart/change?line={{ forloop.index }}&quantity=0" class="text-xs text-rose-600 hover:underline">
+                  Kaldır
+                </a>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    <!-- Selsil Adhesive Notice in Cart -->
+    <div class="px-5 py-2.5 bg-amber-50/70 border-t border-b border-amber-200/50 text-xs text-amber-900 flex items-center gap-2">
+      <span>🛡️ <strong>10 Yıl Açık Hava Solmama Garantisi</strong> dahildir.</span>
+    </div>
+
+    <!-- Footer -->
+    <div class="p-5 border-t border-stone-200 bg-stone-50 space-y-3">
+      <div class="flex items-center justify-between text-base font-extrabold text-stone-900">
+        <span>Ara Toplam:</span>
+        <span class="cart-drawer-total">{{ cart.total_price | money }}</span>
+      </div>
+      <p class="text-[11px] text-stone-500 text-center">Kargo ve vergiler ödeme adımında hesaplanır.</p>
+      <a
+        href="/checkout"
+        class="w-full py-3.5 bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-center"
+      >
+        <span>Siparişi Tamamla & Ödeme</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+        </svg>
+      </a>
+      <a href="/cart" class="block text-center text-xs text-stone-600 hover:text-stone-900 font-semibold underline">
+        Sepet Sayfasına Git
+      </a>
+    </div>
+  </div>
+</div>
