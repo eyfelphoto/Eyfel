@@ -183,13 +183,16 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onBackToStore, onLogout 
           (!rawUrl.startsWith('data:') && !rawUrl.startsWith('http'));
 
         if (isStoragePath) {
-          // Call get-signed-url
+          // Call get-signed-url safely
           fetch(`/api/get-signed-url?filePath=${encodeURIComponent(rawUrl)}`)
-            .then(res => res.json())
-            .then(data => {
-              if (data.signedUrl) setSignedPhotoUrl(data.signedUrl);
+            .then(res => {
+              const ct = res.headers.get('content-type') || '';
+              return ct.includes('application/json') ? res.json() : null;
             })
-            .catch(console.error);
+            .then(data => {
+              if (data?.signedUrl) setSignedPhotoUrl(data.signedUrl);
+            })
+            .catch(() => {});
         } else {
           setSignedPhotoUrl(rawUrl);
         }

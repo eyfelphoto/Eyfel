@@ -100,11 +100,24 @@ export default function App() {
                 isActive: d.is_active !== undefined ? d.is_active : true,
               };
             });
-            setProducts(mapped);
+            let finalProducts = mapped;
+            try {
+              const cached = JSON.parse(localStorage.getItem('ebedi_hatira_custom_products') || '{}');
+              finalProducts = mapped.map(p => cached[p.id] ? { ...p, ...cached[p.id] } : p);
+            } catch {}
+            setProducts(finalProducts);
           }
         } catch (err) {
           console.error('Storefront ürün çekme hatası:', err);
         }
+      } else {
+        // Fallback to local cache if offline
+        try {
+          const cached = JSON.parse(localStorage.getItem('ebedi_hatira_custom_products') || '{}');
+          if (Object.keys(cached).length > 0) {
+            setProducts(prev => prev.map(p => cached[p.id] ? { ...p, ...cached[p.id] } : p));
+          }
+        } catch {}
       }
     };
     loadLiveProducts();

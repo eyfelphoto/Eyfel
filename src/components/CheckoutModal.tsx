@@ -81,9 +81,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
           body: JSON.stringify({ items, customer }),
         });
 
-        const data = await response.json();
+        const ct = response.headers.get('content-type') || '';
+        const data = ct.includes('application/json') ? await response.json().catch(() => ({})) : {};
 
-        if (response.ok && data.iframeToken) {
+        if (response.ok && data?.iframeToken) {
           setPendingOrderNumber(data.orderNumber);
           setPaytrToken(data.iframeToken);
           setIsTestMode(data.status === 'test_simulation');
