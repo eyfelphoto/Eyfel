@@ -9,6 +9,7 @@ import {
 import { Order, OrderStatus, Product } from '../../types';
 import { PRODUCTS } from '../../data/products';
 import { supabase, isSupabaseConfigured } from '../../lib/supabase';
+import { ProductEditModal } from './ProductEditModal';
 
 interface AdminPanelProps {
   onBackToStore: () => void;
@@ -20,9 +21,15 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onBackToStore, onLogout 
   const [orders, setOrders] = useState<Order[]>([]);
   const [products, setProducts] = useState<Product[]>(PRODUCTS);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingProducts, setIsLoadingProducts] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+
+  // Product edit state
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [productCategoryFilter, setProductCategoryFilter] = useState<'all' | 'insan' | 'hayvan'>('all');
+  const [productSearchTerm, setProductSearchTerm] = useState('');
 
   // Status update & shipping state in modal
   const [editStatus, setEditStatus] = useState<OrderStatus>('Ödeme Bekliyor');
@@ -105,8 +112,58 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onBackToStore, onLogout 
     }
   };
 
+  // Load products from Supabase
+  const fetchProducts = async () => {
+    setIsLoadingProducts(true);
+    try {
+      if (isSupabaseConfigured && supabase) {
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .order('created_at', { ascending: true });
+
+        if (!error && data && data.length > 0) {
+          const mapped: Product[] = data.map((d: any) => {
+            const feat = d.features && typeof d.features === 'object' && !Array.isArray(d.features) ? d.features : {};
+            return {
+              id: d.id,
+              modelType: d.model_type || 'dikdortgen',
+              title: d.title,
+              subtitle: d.subtitle || '',
+              category: d.category || 'insan',
+              tag: d.tag || '',
+              image: d.image_url || '/images/dikdortgen_60x60_model.jpg',
+              basePrice: Number(d.base_price || 690),
+              compareAtPrice: feat.compare_at_price ? Number(feat.compare_at_price) : undefined,
+              discountPrice: feat.discount_price ? Number(feat.discount_price) : undefined,
+              taxRate: feat.tax_rate !== undefined ? Number(feat.tax_rate) : 20,
+              taxIncluded: feat.tax_included !== undefined ? Boolean(feat.tax_included) : true,
+              stockStatus: d.stock_status || 'in_stock',
+              stockQuantity: feat.stock_quantity !== undefined ? Number(feat.stock_quantity) : 100,
+              sizes: d.sizes || [],
+              description: d.description || '',
+              shapeDetails: d.shape_details || '',
+              features: Array.isArray(d.features) ? d.features : (feat.features_list || []),
+              seoTitle: feat.seo_title || '',
+              seoDescription: feat.seo_description || '',
+              slug: feat.slug || d.id,
+              isActive: d.is_active !== undefined ? d.is_active : true,
+            };
+          });
+          setProducts(mapped);
+          return;
+        }
+      }
+    } catch (e) {
+      console.error('Ürünleri yükleme hatası:', e);
+    } finally {
+      setIsLoadingProducts(false);
+    }
+  };
+
   useEffect(() => {
     fetchOrders();
+    fetchProducts();
   }, []);
 
   // When an order is selected, initialize edit states
@@ -437,52 +494,214 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onBackToStore, onLogout 
         {/* TAB 2: ÜRÜNLER (PRODUCTS) */}
         {activeTab === 'products' && (
           <div className="space-y-6">
-            <div className="bg-white p-5 rounded-2xl border border-stone-200 shadow-xs flex items-center justify-between">
+            <div className="bg-white p-5 rounded-2xl border border-stone-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
-                <h2 className="text-lg font-extrabold text-stone-900">Ürün & Model Kataloğu</h2>
-                <p className="text-xs text-stone-500 mt-0.5">Mağazadaki 6 plaka modelinin stok ve fiyat bilgilerini denetleyin.</p>
+                <h2 className="text-lg font-extrabold text-stone-900">Ürün & Model Kataloğu Yönetimi</h2>
+                <p className="text-xs text-stone-500 mt-0.5">
+                  Ürün ismi, stok bilgisi, taban & indirimli fiyat, görseller, ebat kombinasyonları, KDV ve SEO ayarlarını düzenleyin.
+                </p>
               </div>
-              <span className="text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1 rounded-full">
-                {products.length} Aktif Model
-              </span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={fetchProducts}
+                  disabled={isLoadingProducts}
+                  className="px-3 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${isLoadingProducts ? 'animate-spin' : ''}`} />
+                  <span>Yenile</span>
+                </button>
+                <span className="text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1 rounded-full">
+                  {products.length} Kayıtlı Model
+                </span>
+              </div>
             </div>
 
+            {/* Filter & Search Bar */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <div className="relative flex-1">
+                <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-3" />
+                <input
+                  type="text"
+                  value={productSearchTerm}
+                  onChange={(e) => setProductSearchTerm(e.target.value)}
+                  placeholder="Ürün adı, açıklama veya ID ile ara..."
+                  className="w-full pl-10 pr-4 py-2.5 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                />
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setProductCategoryFilter('all')}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+                    productCategoryFilter === 'all'
+                      ? 'bg-stone-900 text-white shadow-xs'
+                      : 'bg-white border border-stone-300 text-stone-700 hover:bg-stone-50'
+                  }`}
+                >
+                  Tümü ({products.length})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setProductCategoryFilter('insan')}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+                    productCategoryFilter === 'insan'
+                      ? 'bg-amber-700 text-white shadow-xs'
+                      : 'bg-white border border-stone-300 text-stone-700 hover:bg-stone-50'
+                  }`}
+                >
+                  İnsan Plakaları ({products.filter(p => p.category === 'insan').length})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setProductCategoryFilter('hayvan')}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+                    productCategoryFilter === 'hayvan'
+                      ? 'bg-emerald-700 text-white shadow-xs'
+                      : 'bg-white border border-stone-300 text-stone-700 hover:bg-stone-50'
+                  }`}
+                >
+                  Can Dostu ({products.filter(p => p.category === 'hayvan').length})
+                </button>
+              </div>
+            </div>
+
+            {/* Products Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {products.map(prod => (
-                <div key={prod.id} className="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-xs p-4 flex flex-col justify-between">
-                  <div>
-                    <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-stone-100 mb-3">
-                      <img src={prod.image} alt={prod.title} className="w-full h-full object-cover" />
-                      <span className="absolute top-2 left-2 bg-stone-900 text-white text-[10px] font-bold px-2 py-0.5 rounded">
-                        {prod.category === 'insan' ? 'İnsan Modeli' : 'Can Dostu'}
-                      </span>
-                    </div>
-                    <h3 className="font-bold text-sm text-stone-900">{prod.title}</h3>
-                    <p className="text-xs text-stone-500 mt-1 line-clamp-2">{prod.description}</p>
-                    <div className="mt-3 pt-3 border-t border-stone-100 text-xs">
-                      <div className="flex justify-between font-bold text-stone-900 mb-1">
-                        <span>Başlangıç Fiyatı:</span>
-                        <span className="text-amber-800 font-extrabold">{prod.basePrice} ₺</span>
-                      </div>
-                      <div className="text-[11px] text-stone-500">
-                        {prod.sizes.length} Ebat Seçeneği (10x15 - 20x30 cm)
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-xs">
-                    <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded flex items-center gap-1">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Stokta Mevcut
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => alert(`${prod.title} için fiyat düzenleme yakında eklenecektir.`)}
-                      className="text-stone-700 hover:text-amber-700 font-bold underline"
+              {products
+                .filter(p => {
+                  if (productCategoryFilter !== 'all' && p.category !== productCategoryFilter) return false;
+                  if (productSearchTerm) {
+                    const q = productSearchTerm.toLowerCase();
+                    return p.title.toLowerCase().includes(q) || p.description.toLowerCase().includes(q) || p.id.toLowerCase().includes(q);
+                  }
+                  return true;
+                })
+                .map(prod => {
+                  const hasDiscount = Boolean(prod.compareAtPrice && prod.compareAtPrice > prod.basePrice);
+                  const discountPct = hasDiscount 
+                    ? Math.round(((prod.compareAtPrice! - prod.basePrice) / prod.compareAtPrice!) * 100) 
+                    : 0;
+
+                  return (
+                    <div 
+                      key={prod.id} 
+                      className={`bg-white rounded-2xl border transition-all duration-200 overflow-hidden shadow-xs hover:shadow-md p-4 flex flex-col justify-between ${
+                        prod.isActive === false ? 'border-red-200 bg-red-50/20 opacity-80' : 'border-stone-200'
+                      }`}
                     >
-                      Düzenle
-                    </button>
-                  </div>
-                </div>
-              ))}
+                      <div>
+                        {/* Image Preview with Badges */}
+                        <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-stone-100 mb-3 border border-stone-200/80">
+                          <img src={prod.image} alt={prod.title} className="w-full h-full object-cover" />
+                          
+                          <div className="absolute top-2 left-2 flex gap-1">
+                            <span className="bg-stone-900/90 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded">
+                              {prod.category === 'insan' ? 'İnsan Modeli' : 'Can Dostu'}
+                            </span>
+                            {prod.tag && (
+                              <span className="bg-amber-600/90 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded">
+                                {prod.tag}
+                              </span>
+                            )}
+                          </div>
+
+                          <span className={`absolute top-2 right-2 text-[10px] font-bold px-2 py-0.5 rounded shadow-xs ${
+                            prod.isActive === false 
+                              ? 'bg-red-600 text-white' 
+                              : 'bg-emerald-600 text-white'
+                          }`}>
+                            {prod.isActive === false ? 'Pasif (Gizli)' : 'Yayında'}
+                          </span>
+
+                          {hasDiscount && (
+                            <span className="absolute bottom-2 left-2 bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded shadow-xs">
+                              %{discountPct} İndirimli
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Title & Subtitle */}
+                        <h3 className="font-bold text-sm text-stone-900 line-clamp-1">{prod.title}</h3>
+                        {prod.subtitle && (
+                          <p className="text-[11px] font-medium text-amber-800 line-clamp-1 mt-0.5">{prod.subtitle}</p>
+                        )}
+                        <p className="text-xs text-stone-500 mt-1 line-clamp-2 leading-relaxed">{prod.description}</p>
+
+                        {/* Pricing, Discount & Taxes Area */}
+                        <div className="mt-3 pt-3 border-t border-stone-100 space-y-1.5 text-xs">
+                          <div className="flex items-center justify-between">
+                            <span className="text-stone-500">Satış Fiyatı:</span>
+                            <div className="flex items-center gap-1.5">
+                              {hasDiscount && (
+                                <span className="line-through text-stone-400 text-xs">
+                                  {prod.compareAtPrice} ₺
+                                </span>
+                              )}
+                              <span className="text-amber-900 font-extrabold text-sm">
+                                {prod.basePrice} ₺
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between text-[11px] text-stone-500">
+                            <span>KDV Durumu:</span>
+                            <span className="font-semibold text-stone-700">
+                              %{prod.taxRate ?? 20} KDV {prod.taxIncluded !== false ? 'Dahil' : 'Hariç'}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center justify-between text-[11px] text-stone-500">
+                            <span>Kombinasyon:</span>
+                            <span className="font-semibold text-stone-700">
+                              {prod.sizes.length} Farklı Ebat Varyantı
+                            </span>
+                          </div>
+
+                          {prod.slug && (
+                            <div className="flex items-center justify-between text-[10px] text-stone-400 font-mono">
+                              <span>SEO:</span>
+                              <span className="truncate max-w-[160px]">/urun/{prod.slug}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Stock Badge & Edit Action Button */}
+                      <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between gap-2">
+                        <div>
+                          {prod.stockStatus === 'out_of_stock' ? (
+                            <span className="text-red-700 font-bold bg-red-50 border border-red-200 px-2 py-0.5 rounded text-[11px] flex items-center gap-1">
+                              🔴 Tükendi
+                            </span>
+                          ) : prod.stockStatus === 'low_stock' ? (
+                            <span className="text-amber-800 font-bold bg-amber-50 border border-amber-200 px-2 py-0.5 rounded text-[11px] flex items-center gap-1">
+                              🟡 Kritik Stok ({prod.stockQuantity ?? 5} Adet)
+                            </span>
+                          ) : prod.stockStatus === 'pre_order' ? (
+                            <span className="text-blue-800 font-bold bg-blue-50 border border-blue-200 px-2 py-0.5 rounded text-[11px] flex items-center gap-1">
+                              🔵 Ön Sipariş
+                            </span>
+                          ) : (
+                            <span className="text-emerald-700 font-bold bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded text-[11px] flex items-center gap-1">
+                              <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Stokta ({prod.stockQuantity ?? 100} Adet)
+                            </span>
+                          )}
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => setEditingProduct(prod)}
+                          className="px-3.5 py-1.5 bg-stone-900 hover:bg-amber-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors flex items-center gap-1 cursor-pointer"
+                        >
+                          <span>Düzenle</span>
+                          <ChevronRight className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
             </div>
           </div>
         )}
@@ -788,6 +1007,19 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onBackToStore, onLogout 
             </div>
           </div>
         </div>
+      )}
+
+      {/* Product Edit Modal */}
+      {editingProduct && (
+        <ProductEditModal
+          product={editingProduct}
+          isOpen={Boolean(editingProduct)}
+          onClose={() => setEditingProduct(null)}
+          onSaveSuccess={(updated) => {
+            setProducts((prev) => prev.map((p) => (p.id === updated.id ? updated : p)));
+            setEditingProduct(null);
+          }}
+        />
       )}
     </div>
   );

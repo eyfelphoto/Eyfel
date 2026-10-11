@@ -105,31 +105,83 @@ export const handler: Handler = async (event: HandlerEvent) => {
       };
     }
 
-    // 4. ÜRÜN AKTİF/PASİF VE FİYAT GÜNCELLE
+    // 4. ÜRÜN DÜZENLEME (İSİM, STOK, FİYAT, GÖRSEL, İNDİRİM, KOMBİNASYON, VERGİ, AÇIKLAMA, SEO, KATEGORİ)
     if (action === 'update_product') {
       const body = JSON.parse(event.body || '{}');
-      const { productId, isActive, stockStatus, basePrice } = body;
+      const { 
+        productId, 
+        title, 
+        subtitle, 
+        category, 
+        tag, 
+        imageUrl, 
+        basePrice, 
+        description, 
+        shapeDetails, 
+        sizes, 
+        isActive, 
+        stockStatus,
+        compareAtPrice,
+        discountPrice,
+        taxRate,
+        taxIncluded,
+        stockQuantity,
+        seoTitle,
+        seoDescription,
+        slug,
+        featuresList,
+        existingFeatures,
+      } = body;
 
       if (!productId) {
         return { statusCode: 400, headers, body: JSON.stringify({ error: 'Ürün ID gereklidir.' }) };
       }
 
       const updateData: any = { updated_at: new Date().toISOString() };
-      if (isActive !== undefined) updateData.is_active = isActive;
+      if (title !== undefined) updateData.title = title;
+      if (subtitle !== undefined) updateData.subtitle = subtitle;
+      if (category !== undefined) updateData.category = category;
+      if (tag !== undefined) updateData.tag = tag;
+      if (imageUrl !== undefined) updateData.image_url = imageUrl;
+      if (basePrice !== undefined) updateData.base_price = Number(basePrice);
+      if (description !== undefined) updateData.description = description;
+      if (shapeDetails !== undefined) updateData.shape_details = shapeDetails;
+      if (sizes !== undefined) updateData.sizes = sizes;
+      if (isActive !== undefined) updateData.is_active = Boolean(isActive);
       if (stockStatus !== undefined) updateData.stock_status = stockStatus;
-      if (basePrice !== undefined) updateData.base_price = basePrice;
 
-      const { error } = await supabaseAdmin
+      // Pack extended ecommerce features into features JSONB
+      const baseFeatures = existingFeatures && typeof existingFeatures === 'object' && !Array.isArray(existingFeatures) 
+        ? existingFeatures 
+        : {};
+
+      const updatedFeatures = {
+        ...baseFeatures,
+        compare_at_price: compareAtPrice !== undefined ? Number(compareAtPrice) : baseFeatures.compare_at_price,
+        discount_price: discountPrice !== undefined ? Number(discountPrice) : baseFeatures.discount_price,
+        tax_rate: taxRate !== undefined ? Number(taxRate) : (baseFeatures.tax_rate ?? 20),
+        tax_included: taxIncluded !== undefined ? Boolean(taxIncluded) : (baseFeatures.tax_included ?? true),
+        stock_quantity: stockQuantity !== undefined ? Number(stockQuantity) : (baseFeatures.stock_quantity ?? 100),
+        seo_title: seoTitle !== undefined ? seoTitle : baseFeatures.seo_title,
+        seo_description: seoDescription !== undefined ? seoDescription : baseFeatures.seo_description,
+        slug: slug !== undefined ? slug : baseFeatures.slug,
+        features_list: featuresList !== undefined ? featuresList : (baseFeatures.features_list || []),
+      };
+      updateData.features = updatedFeatures;
+
+      const { data, error } = await supabaseAdmin
         .from('products')
         .update(updateData)
-        .eq('id', productId);
+        .eq('id', productId)
+        .select()
+        .single();
 
       if (error) throw error;
 
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify({ success: true }),
+        body: JSON.stringify({ success: true, product: data }),
       };
     }
 

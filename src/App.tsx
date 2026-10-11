@@ -16,6 +16,7 @@ import { FaqSection } from './components/FaqSection';
 import { Footer } from './components/Footer';
 import { AdminPanel } from './components/admin/AdminPanel';
 import { AdminLogin } from './components/admin/AdminLogin';
+import { supabase, isSupabaseConfigured } from './lib/supabase';
 import { 
   Sparkles, ShieldCheck, Gift, AlertTriangle, 
   Heart, Filter, CheckCircle2, ArrowRight 
@@ -52,6 +53,7 @@ export default function App() {
     }
   });
 
+  const [products, setProducts] = useState<Product[]>(PRODUCTS);
   const [activeCategory, setActiveCategory] = useState<'all' | 'insan' | 'hayvan'>('all');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -59,6 +61,54 @@ export default function App() {
   const [completedOrder, setCompletedOrder] = useState<Order | null>(null);
   const [isTrackingOpen, setIsTrackingOpen] = useState(false);
   const [trackingInitialCode, setTrackingInitialCode] = useState<string>('');
+
+  // Load live products from Supabase
+  useEffect(() => {
+    const loadLiveProducts = async () => {
+      if (isSupabaseConfigured && supabase) {
+        try {
+          const { data, error } = await supabase
+            .from('products')
+            .select('*')
+            .order('created_at', { ascending: true });
+
+          if (!error && data && data.length > 0) {
+            const mapped: Product[] = data.map((d: any) => {
+              const feat = d.features && typeof d.features === 'object' && !Array.isArray(d.features) ? d.features : {};
+              return {
+                id: d.id,
+                modelType: d.model_type || 'dikdortgen',
+                title: d.title,
+                subtitle: d.subtitle || '',
+                category: d.category || 'insan',
+                tag: d.tag || '',
+                image: d.image_url || '/images/dikdortgen_60x60_model.jpg',
+                basePrice: Number(d.base_price || 690),
+                compareAtPrice: feat.compare_at_price ? Number(feat.compare_at_price) : undefined,
+                discountPrice: feat.discount_price ? Number(feat.discount_price) : undefined,
+                taxRate: feat.tax_rate !== undefined ? Number(feat.tax_rate) : 20,
+                taxIncluded: feat.tax_included !== undefined ? Boolean(feat.tax_included) : true,
+                stockStatus: d.stock_status || 'in_stock',
+                stockQuantity: feat.stock_quantity !== undefined ? Number(feat.stock_quantity) : 100,
+                sizes: d.sizes || [],
+                description: d.description || '',
+                shapeDetails: d.shape_details || '',
+                features: Array.isArray(d.features) ? d.features : (feat.features_list || []),
+                seoTitle: feat.seo_title || '',
+                seoDescription: feat.seo_description || '',
+                slug: feat.slug || d.id,
+                isActive: d.is_active !== undefined ? d.is_active : true,
+              };
+            });
+            setProducts(mapped);
+          }
+        } catch (err) {
+          console.error('Storefront ürün çekme hatası:', err);
+        }
+      }
+    };
+    loadLiveProducts();
+  }, [isAdminRoute]);
 
   // Handle URL changes (/admin)
   useEffect(() => {
@@ -152,7 +202,8 @@ export default function App() {
     setIsTrackingOpen(true);
   };
 
-  const filteredProducts = PRODUCTS.filter((p) => {
+  const filteredProducts = products.filter((p) => {
+    if (p.isActive === false) return false;
     if (activeCategory === 'all') return true;
     return p.category === activeCategory;
   });

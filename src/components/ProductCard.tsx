@@ -134,20 +134,47 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onCustomize }
         {/* Pricing & CTA */}
         <div className="mt-5 pt-4 border-t border-neutral-100 flex items-center justify-between gap-3">
           <div>
-            <div className="text-[11px] text-neutral-400">
-              {isHuman && product.modelType === 'dikdortgen' ? '10x15 cm Başlangıç' : '10x10 / 10x15 Başlangıç'}
+            <div className="text-[11px] text-neutral-400 flex items-center gap-1.5">
+              <span>{isHuman && product.modelType === 'dikdortgen' ? '10x15 cm Başlangıç' : '10x10 / 10x15 Başlangıç'}</span>
+              {product.compareAtPrice && product.compareAtPrice > product.basePrice && (
+                <span className="bg-red-100 text-red-700 font-extrabold px-1.5 py-0.2 rounded text-[10px]">
+                  -%{Math.round(((product.compareAtPrice - product.basePrice) / product.compareAtPrice) * 100)}
+                </span>
+              )}
             </div>
-            <div className="text-xl font-black text-neutral-900">
-              {product.basePrice.toLocaleString('tr-TR')} ₺
+            <div className="flex items-baseline gap-2">
+              {product.compareAtPrice && product.compareAtPrice > product.basePrice && (
+                <span className="line-through text-neutral-400 text-xs font-semibold">
+                  {product.compareAtPrice.toLocaleString('tr-TR')} ₺
+                </span>
+              )}
+              <div className="text-xl font-black text-neutral-900">
+                {product.basePrice.toLocaleString('tr-TR')} ₺
+              </div>
             </div>
+            {product.stockStatus === 'low_stock' && (
+              <div className="text-[10px] font-bold text-amber-800 mt-0.5 flex items-center gap-1">
+                <span>⚡ Kritik Stok: Son {product.stockQuantity ?? 5} Adet!</span>
+              </div>
+            )}
+            {product.stockStatus === 'out_of_stock' && (
+              <div className="text-[10px] font-bold text-red-700 mt-0.5">
+                <span>✕ Tükendi (Üretimde)</span>
+              </div>
+            )}
           </div>
 
           <button
             type="button"
+            disabled={product.stockStatus === 'out_of_stock'}
             onClick={() => onCustomize(product)}
-            className="px-4 py-2.5 rounded-xl bg-neutral-900 hover:bg-amber-700 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-md group/btn cursor-pointer"
+            className={`px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all shadow-md group/btn ${
+              product.stockStatus === 'out_of_stock'
+                ? 'bg-neutral-300 text-neutral-500 cursor-not-allowed'
+                : 'bg-neutral-900 hover:bg-amber-700 text-white cursor-pointer'
+            }`}
           >
-            <span>Sipariş Ver</span>
+            <span>{product.stockStatus === 'out_of_stock' ? 'Tükendi' : 'Sipariş Ver'}</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
           </button>
         </div>

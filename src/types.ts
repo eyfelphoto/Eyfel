@@ -5,6 +5,8 @@ export interface ProductSize {
   label: string;
   dimensions: string; // e.g. "15 x 21 cm"
   price: number;
+  compareAtPrice?: number; // İndirim öncesi eski fiyat
+  stockQuantity?: number; // Varyant stok adedi
   popular?: boolean;
 }
 
@@ -17,12 +19,22 @@ export interface Product {
   tag: string;
   image: string;
   basePrice: number;
+  compareAtPrice?: number; // İndirimli fiyat özelliği: Üstü çizili eski fiyat
+  discountPrice?: number; // Kampanyalı indirimli satış fiyatı
+  taxRate?: number; // Vergilendirme KDV oranı (%20, %10, %0)
+  taxIncluded?: boolean; // Fiyata KDV dahil mi?
+  stockStatus?: 'in_stock' | 'low_stock' | 'out_of_stock' | 'pre_order';
+  stockQuantity?: number; // Toplam stok adedi
   sizes: ProductSize[];
   description: string;
   shapeDetails: string;
   features: string[];
-  dimensionsInfo: string;
-  defaultTextPreset: {
+  dimensionsInfo?: string;
+  seoTitle?: string; // SEO Başlığı
+  seoDescription?: string; // SEO Açıklaması
+  slug?: string; // SEO URL uzantısı
+  isActive?: boolean;
+  defaultTextPreset?: {
     title: string;
     dates: string;
     quote: string;

@@ -81,9 +81,9 @@ export const ProductCustomizerModal: React.FC<ProductCustomizerModalProps> = ({
     photoZoom: 1,
     includeGlue: false, // Selsil Ultra Tack (+299 TL) opsiyonel
     includeText: false, // For pets: optional, false by default
-    fullName: isHumanModel ? '' : product.defaultTextPreset.title,
-    dates: isHumanModel ? '' : product.defaultTextPreset.dates,
-    quote: isHumanModel ? '' : product.defaultTextPreset.quote,
+    fullName: isHumanModel ? '' : (product.defaultTextPreset?.title || 'Can Dostumuz'),
+    dates: isHumanModel ? '' : (product.defaultTextPreset?.dates || '2012 - 2024'),
+    quote: isHumanModel ? '' : (product.defaultTextPreset?.quote || 'Seni Asla Unutmayacağız'),
     fontFamily: 'serif',
     textColor: 'black',
     includeBorder: true,
@@ -729,7 +729,7 @@ export const ProductCustomizerModal: React.FC<ProductCustomizerModalProps> = ({
                         type="text"
                         value={options.fullName || ''}
                         onChange={(e) => setOptions(prev => ({ ...prev, fullName: e.target.value }))}
-                        placeholder={product.defaultTextPreset.title}
+                        placeholder={product.defaultTextPreset?.title || 'Dostumuzun Adı'}
                         className="w-full px-3 py-2 text-sm rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-amber-500 uppercase"
                       />
                     </div>
