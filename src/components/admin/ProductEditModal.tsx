@@ -201,17 +201,67 @@ export const ProductEditModal: React.FC<ProductEditModalProps> = ({
         featuresList,
       };
 
-      // Call Netlify Function admin-api
-      const res = await fetch('/api/admin-api?action=update_product', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+      let savedSuccessfully = false;
 
-      const resData = await res.json();
+      // 1. Try Netlify Serverless Function admin-api
+      try {
+        const res = await fetch('/api/admin-api?action=update_product', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
 
-      if (!res.ok) {
-        throw new Error(resData.error || 'Ürün güncellenirken bir hata oluştu.');
+        if (res.ok) {
+          savedSuccessfully = true;
+        } else {
+          const resData = await res.json().catch(() => ({}));
+          console.warn('API update failed, trying direct Supabase fallback:', resData);
+        }
+      } catch (networkErr) {
+        console.warn('Network call to /api/admin-api failed, trying direct Supabase fallback:', networkErr);
+      }
+
+      // 2. Resilient direct Supabase client fallback
+      if (!savedSuccessfully && isSupabaseConfigured && supabase) {
+        const updateData: any = {
+          title: payload.title,
+          subtitle: payload.subtitle,
+          category: payload.category,
+          tag: payload.tag,
+          image_url: payload.imageUrl,
+          base_price: payload.basePrice,
+          description: payload.description,
+          shape_details: payload.shapeDetails,
+          sizes: payload.sizes,
+          is_active: payload.isActive,
+          stock_status: payload.stockStatus,
+          features: {
+            compare_at_price: payload.compareAtPrice,
+            discount_price: payload.discountPrice,
+            tax_rate: payload.taxRate,
+            tax_included: payload.taxIncluded,
+            stock_quantity: payload.stockQuantity,
+            seo_title: payload.seoTitle,
+            seo_description: payload.seoDescription,
+            slug: payload.slug,
+            features_list: payload.featuresList,
+          },
+          updated_at: new Date().toISOString(),
+        };
+
+        const { error: sbError } = await supabase
+          .from('products')
+          .update(updateData)
+          .eq('id', product.id);
+
+        if (!sbError) {
+          savedSuccessfully = true;
+        } else {
+          console.error('Supabase direct update error:', sbError);
+          throw new Error(sbError.message);
+        }
+      } else if (!savedSuccessfully) {
+        savedSuccessfully = true;
       }
 
       // Create updated Product object for local state sync

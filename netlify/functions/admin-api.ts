@@ -2,8 +2,13 @@ import type { Handler, HandlerEvent } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
 
 const getSupabaseAdmin = () => {
-  const url = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || '';
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
+  const url = 
+    process.env.VITE_SUPABASE_URL || 
+    process.env.SUPABASE_URL || 
+    'https://zjuyvjylqhrgklsztrco.supabase.co';
+  const serviceKey = 
+    process.env.SUPABASE_SERVICE_ROLE_KEY || 
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqdXl2anlscWhyZ2tsc3p0cmNvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc5MTcyMzc5MywiZXhwIjoyMTA3Mjk5NzkzfQ.usJuyZF8knTUl4GE93Dtgk3X1LZZ-TmiSU8u-bXSclg';
   if (!url || !serviceKey || url.includes('your-project')) return null;
   return createClient(url, serviceKey);
 };
