@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CartItem, Order, OrderCustomerInfo, PaymentMethod } from '../types';
-import { BANK_ACCOUNTS } from '../data/products';
+import { BANK_ACCOUNTS, SELSIL_GLUE_PRICE } from '../data/products';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { 
   X, CreditCard, Building2, ShieldCheck, Check, 
   Copy, AlertTriangle, Gift, Lock, ArrowRight, Sparkles 
@@ -107,31 +108,82 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     }
   };
 
-  const finalizeHavaleOrder = () => {
+  const finalizeHavaleOrder = async () => {
     setIsSubmitting(true);
-    setTimeout(() => {
-      const orderCode = `EH-${Date.now().toString().slice(-6)}${Math.floor(1000 + Math.random() * 9000)}`;
-      const completedOrder: Order = {
-        orderId: orderCode,
-        createdAt: new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
-        items: [...items],
-        customer,
-        paymentMethod: 'havale',
-        subtotal: rawSubtotal,
-        discount: havaleDiscount,
-        shipping: 0,
-        total,
-        status: 'Ödeme Bekliyor',
-        bankInfo: BANK_ACCOUNTS[selectedBankIndex],
-      };
+    const orderCode = `EH-${Date.now().toString().slice(-6)}${Math.floor(1000 + Math.random() * 9000)}`;
 
-      setIsSubmitting(false);
-      onOrderSuccess(completedOrder);
-      onClose();
-    }, 1000);
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { data: orderData } = await supabase.from('orders').insert({
+          order_number: orderCode,
+          customer_info: customer,
+          status: 'Ödeme Bekliyor',
+          payment_status: 'pending',
+          payment_method: 'havale',
+          subtotal: rawSubtotal,
+          glue_total: items.filter(i => i.includeGlue).reduce((s, i) => s + SELSIL_GLUE_PRICE * i.quantity, 0),
+          shipping_fee: 0,
+          total_amount: total,
+          customer_notes: customer.notes || '',
+        }).select('id').single();
+
+        if (orderData && items.length) {
+          await supabase.from('order_items').insert(
+            items.map(item => ({
+              order_id: orderData.id,
+              product_id: item.product?.id || null,
+              product_title: item.product?.title || 'Mezar Plakası',
+              selected_size: item.selectedSize || {},
+              customization: item.customization || {},
+              photo_storage_path: item.customization?.photoStoragePath || (item.customization?.photoUrl?.startsWith('order-photos/') || item.customization?.photoUrl?.startsWith('plate-') ? item.customization.photoUrl : null),
+              include_glue: Boolean(item.includeGlue),
+              glue_price: item.includeGlue ? SELSIL_GLUE_PRICE : 0,
+              unit_price: item.unitPrice,
+              quantity: item.quantity,
+              line_total: item.unitPrice * item.quantity,
+            }))
+          );
+        }
+      } catch (dbErr) {
+        console.error('Supabase havale kayıt hatası:', dbErr);
+      }
+    }
+
+    const completedOrder: Order = {
+      orderId: orderCode,
+      createdAt: new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+      items: [...items],
+      customer,
+      paymentMethod: 'havale',
+      subtotal: rawSubtotal,
+      discount: havaleDiscount,
+      shipping: 0,
+      total,
+      status: 'Ödeme Bekliyor',
+      bankInfo: BANK_ACCOUNTS[selectedBankIndex],
+    };
+
+    setIsSubmitting(false);
+    onOrderSuccess(completedOrder);
+    onClose();
   };
 
-  const handleCompletePaytrSuccess = () => {
+  const handleCompletePaytrSuccess = async () => {
+    if (isSupabaseConfigured && supabase && pendingOrderNumber) {
+      try {
+        await supabase
+          .from('orders')
+          .update({
+            payment_status: 'paid',
+            status: 'Ödeme Alındı',
+            updated_at: new Date().toISOString(),
+          })
+          .eq('order_number', pendingOrderNumber);
+      } catch (err) {
+        console.error('PayTR test onay güncelleme hatası:', err);
+      }
+    }
+
     const completedOrder: Order = {
       orderId: pendingOrderNumber,
       createdAt: new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }),

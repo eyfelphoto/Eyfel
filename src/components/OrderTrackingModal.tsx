@@ -39,7 +39,7 @@ export const OrderTrackingModal: React.FC<OrderTrackingModalProps> = ({
       if (isSupabaseConfigured && supabase) {
         const { data, error } = await supabase
           .from('orders')
-          .select('*')
+          .select('*, order_items(*)')
           .ilike('order_number', query)
           .single();
 
@@ -47,7 +47,34 @@ export const OrderTrackingModal: React.FC<OrderTrackingModalProps> = ({
           const liveOrder: Order = {
             orderId: data.order_number,
             createdAt: new Date(data.created_at).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' }),
-            items: data.items || [],
+            items: (data.order_items && data.order_items.length > 0)
+              ? data.order_items.map((oi: any) => ({
+                  id: oi.id,
+                  product: {
+                    id: oi.product_id || 'plaka',
+                    title: oi.product_title || 'Mezar Plakası',
+                    modelType: 'dikdortgen',
+                    subtitle: '',
+                    category: 'insan',
+                    tag: 'Özel Sipariş',
+                    image: '/images/dikdortgen_60x60_model.jpg',
+                    basePrice: Number(oi.unit_price || 690),
+                    sizes: [oi.selected_size || { id: 'std', label: 'Standart', dimensions: '15 x 21 cm', price: 690 }],
+                    description: '',
+                    shapeDetails: '',
+                    features: [],
+                    dimensionsInfo: '',
+                    defaultTextPreset: { title: '', dates: '', quote: '' },
+                  },
+                  selectedSize: oi.selected_size || { id: 'std', label: 'Standart', dimensions: '15 x 21 cm', price: 690 },
+                  customization: oi.customization || {},
+                  includeGlue: Boolean(oi.include_glue),
+                  gluePrice: Number(oi.glue_price || 0),
+                  unitPrice: Number(oi.unit_price || 690),
+                  quantity: Number(oi.quantity || 1),
+                  addedAt: 0,
+                }))
+              : (data.items || []),
             customer: data.customer_info,
             paymentMethod: data.payment_method,
             subtotal: Number(data.subtotal || 0),

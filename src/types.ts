@@ -34,6 +34,7 @@ export interface CustomizationOptions {
   selectedShape?: ShapeModel; // For pet models: allows choosing between Dikdörtgen, Kare, Kalp, Yuvarlak
   photoUrl: string | null;
   photoFileName?: string;
+  photoStoragePath?: string; // Private Supabase storage object path
   photoColorMode: 'original' | 'bw';
   photoZoom?: number; // Optional
   includeGlue?: boolean; // Opsiyonel Selsil Ultra Tack 50ml Montaj Yapıştırıcısı (+299 TL)

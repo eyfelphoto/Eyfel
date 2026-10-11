@@ -40,9 +40,10 @@ export const handler: Handler = async (event: HandlerEvent) => {
     }
 
     // GÜVENLİK: Özel (Private) bucket içindeki fotoğrafa 15 dakikalık geçici imzalı URL üret
+    const sanitizedPath = filePath.replace(/^order-photos\//, '').replace(/^\/+/, '');
     const { data, error } = await supabaseAdmin.storage
       .from('order-photos')
-      .createSignedUrl(filePath, 900); // 900 saniye = 15 dakika
+      .createSignedUrl(sanitizedPath, 900); // 900 saniye = 15 dakika
 
     if (error) throw error;
 

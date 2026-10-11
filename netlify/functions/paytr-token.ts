@@ -88,21 +88,69 @@ export const handler: Handler = async (event: HandlerEvent) => {
     // 2. Benzersiz Sipariş Numarası Üret
     const orderNumber = `EH-${Date.now().toString().slice(-6)}${Math.floor(1000 + Math.random() * 9000)}`;
 
-    // 3. Siparişi Supabase'e "Ödeme Bekliyor" olarak önceden kaydet
+    // 3. Siparişi Supabase'e "Ödeme Bekliyor" olarak kaydet
     if (supabaseAdmin) {
       try {
-        await supabaseAdmin.from('orders').insert({
-          order_number: orderNumber,
-          customer_info: customer,
-          status: 'Ödeme Bekliyor',
-          payment_status: 'pending',
-          payment_method: 'paytr',
-          subtotal: calculatedSubtotal,
-          glue_total: calculatedGlueTotal,
-          shipping_fee: shippingFee,
-          total_amount: calculatedTotal,
-          customer_notes: customer.notes || '',
-        });
+        let customerId: string | null = null;
+        try {
+          const { data: cData } = await supabaseAdmin
+            .from('customers')
+            .insert({
+              full_name: customer.fullName || 'Müşteri',
+              email: customer.email || '',
+              phone: customer.phone || '',
+              city: customer.city || '',
+              district: customer.district || '',
+              address: customer.address || '',
+            })
+            .select('id')
+            .single();
+          if (cData) customerId = cData.id;
+        } catch (cErr) {
+          console.warn('Customer upsert note:', cErr);
+        }
+
+        const { data: orderData, error: orderErr } = await supabaseAdmin
+          .from('orders')
+          .insert({
+            order_number: orderNumber,
+            customer_id: customerId,
+            customer_info: customer,
+            status: 'Ödeme Bekliyor',
+            payment_status: 'pending',
+            payment_method: 'paytr',
+            subtotal: calculatedSubtotal,
+            glue_total: calculatedGlueTotal,
+            shipping_fee: shippingFee,
+            total_amount: calculatedTotal,
+            customer_notes: customer.notes || '',
+          })
+          .select('id')
+          .single();
+
+        if (orderErr) {
+          console.error('Supabase sipariş insert hatası:', orderErr);
+        } else if (orderData && items && items.length) {
+          const orderItemsRows = items.map((item: any) => {
+            const uPrice = Number(item.unitPrice) || 690;
+            const q = Number(item.quantity) || 1;
+            return {
+              order_id: orderData.id,
+              product_id: item.product?.id || null,
+              product_title: item.product?.title || 'Mezar Plakası',
+              selected_size: item.selectedSize || {},
+              customization: item.customization || {},
+              photo_storage_path: item.customization?.photoStoragePath || (item.customization?.photoUrl?.startsWith('order-photos/') ? item.customization.photoUrl : null),
+              include_glue: Boolean(item.includeGlue),
+              glue_price: item.includeGlue ? SELSIL_GLUE_PRICE : 0,
+              unit_price: uPrice,
+              quantity: q,
+              line_total: uPrice * q,
+            };
+          });
+
+          await supabaseAdmin.from('order_items').insert(orderItemsRows);
+        }
       } catch (dbErr) {
         console.error('Supabase sipariş kaydı hatası:', dbErr);
       }

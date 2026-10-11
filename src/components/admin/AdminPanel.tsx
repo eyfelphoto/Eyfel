@@ -38,14 +38,44 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onBackToStore, onLogout 
       if (isSupabaseConfigured && supabase) {
         const { data, error } = await supabase
           .from('orders')
-          .select('*')
+          .select('*, order_items(*)')
           .order('created_at', { ascending: false });
 
         if (!error && data && data.length > 0) {
           const mappedOrders: Order[] = data.map((d: any) => ({
             orderId: d.order_number,
             createdAt: new Date(d.created_at).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
-            items: d.items || [],
+            items: (d.order_items && d.order_items.length > 0)
+              ? d.order_items.map((oi: any) => ({
+                  id: oi.id,
+                  product: {
+                    id: oi.product_id || 'plaka',
+                    title: oi.product_title || 'Mezar Plakası',
+                    modelType: 'dikdortgen',
+                    subtitle: '',
+                    category: 'insan',
+                    tag: 'Özel Sipariş',
+                    image: '/images/dikdortgen_60x60_model.jpg',
+                    basePrice: Number(oi.unit_price || 690),
+                    sizes: [oi.selected_size || { id: 'std', label: 'Standart', dimensions: '15 x 21 cm', price: 690 }],
+                    description: '',
+                    shapeDetails: '',
+                    features: [],
+                    dimensionsInfo: '',
+                    defaultTextPreset: { title: '', dates: '', quote: '' },
+                  },
+                  selectedSize: oi.selected_size || { id: 'std', label: 'Standart', dimensions: '15 x 21 cm', price: 690 },
+                  customization: {
+                    ...(oi.customization || {}),
+                    photoUrl: oi.photo_storage_path || oi.customization?.photoUrl || null,
+                  },
+                  includeGlue: Boolean(oi.include_glue),
+                  gluePrice: Number(oi.glue_price || 0),
+                  unitPrice: Number(oi.unit_price || 690),
+                  quantity: Number(oi.quantity || 1),
+                  addedAt: 0,
+                }))
+              : (d.items || []),
             customer: d.customer_info || { fullName: 'Müşteri', phone: '', email: '', city: '', district: '', address: '' },
             paymentMethod: d.payment_method || 'paytr',
             subtotal: Number(d.subtotal || 0),
@@ -91,7 +121,11 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onBackToStore, onLogout 
       const itemWithPhoto = selectedOrder.items?.find(i => i.customization?.photoUrl);
       if (itemWithPhoto?.customization?.photoUrl) {
         const rawUrl = itemWithPhoto.customization.photoUrl;
-        if (rawUrl.startsWith('order-photos/')) {
+        const isStoragePath = rawUrl.startsWith('order-photos/') || 
+          rawUrl.startsWith('plate-') || 
+          (!rawUrl.startsWith('data:') && !rawUrl.startsWith('http'));
+
+        if (isStoragePath) {
           // Call get-signed-url
           fetch(`/api/get-signed-url?filePath=${encodeURIComponent(rawUrl)}`)
             .then(res => res.json())

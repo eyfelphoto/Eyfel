@@ -1,6 +1,7 @@
 import React, { useState, useRef, useMemo } from 'react';
 import { Product, ProductSize, CustomizationOptions, CartItem, ShapeModel } from '../types';
 import { SAMPLE_QUOTES, getSizesForShape, PET_SHAPES, RECTANGULAR_SIZES, SQUARE_SIZES, SELSIL_GLUE_PRICE, SELSIL_GLUE_IMAGE } from '../data/products';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { 
   X, Upload, CheckCircle2, ShieldCheck, Sparkles, 
   AlertTriangle, FileText, Gift, Info, Trash2,
@@ -137,6 +138,26 @@ export const ProductCustomizerModal: React.FC<ProductCustomizerModalProps> = ({
 
     const isSpecialFormat = fileName.endsWith('.pdf') || fileName.endsWith('.tiff') || fileName.endsWith('.tif') || fileName.endsWith('.heic');
     setIsPdfOrTiff(isSpecialFormat);
+
+    // Upload to Supabase Storage order-photos bucket if configured
+    if (isSupabaseConfigured && supabase) {
+      const cleanName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+      const storageFileName = `plate-${Date.now()}-${cleanName}`;
+      supabase.storage
+        .from('order-photos')
+        .upload(storageFileName, file)
+        .then(({ data, error }) => {
+          if (!error && data) {
+            setOptions(prev => ({
+              ...prev,
+              photoStoragePath: storageFileName,
+            }));
+          }
+        })
+        .catch(err => {
+          console.warn('Supabase storage upload background error:', err);
+        });
+    }
 
     if (isSpecialFormat) {
       setOptions(prev => ({

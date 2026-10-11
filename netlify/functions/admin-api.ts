@@ -36,7 +36,7 @@ export const handler: Handler = async (event: HandlerEvent) => {
     if (action === 'get_orders') {
       const { data: orders, error } = await supabaseAdmin
         .from('orders')
-        .select('*')
+        .select('*, order_items(*)')
         .order('created_at', { ascending: false })
         .limit(100);
 
