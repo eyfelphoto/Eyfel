@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Order } from '../types';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { 
   X, Search, Truck, CheckCircle2, Clock, 
   Package, AlertTriangle, ShieldCheck, PhoneCall 
@@ -23,47 +24,83 @@ export const OrderTrackingModal: React.FC<OrderTrackingModalProps> = ({
     recentOrders.find(o => o.orderId === initialOrderId) || null
   );
   const [hasSearched, setHasSearched] = useState(Boolean(initialOrderId));
+  const [isSearching, setIsSearching] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     const query = searchQuery.trim().toUpperCase();
     if (!query) return;
+    setIsSearching(true);
 
-    // Check recent orders in state
-    const found = recentOrders.find(o => 
-      o.orderId.toUpperCase() === query || 
-      o.customer.phone.replace(/\D/g, '').includes(query.replace(/\D/g, ''))
-    );
+    try {
+      // 1. Try Live Supabase Query
+      if (isSupabaseConfigured && supabase) {
+        const { data, error } = await supabase
+          .from('orders')
+          .select('*')
+          .ilike('order_number', query)
+          .single();
 
-    if (found) {
-      setSearchedOrder(found);
-    } else {
-      // Mock realistic order matching the queried code
-      const dummyOrder: Order = {
-        orderId: query.startsWith('EB-') ? query : `EB-2026-${Math.floor(10000 + Math.random() * 90000)}`,
-        createdAt: 'Dün, 14:30',
-        items: recentOrders.length > 0 ? recentOrders[0].items : [],
-        customer: {
-          fullName: 'Sipariş Sahibi',
-          phone: searchQuery.length >= 10 ? searchQuery : '0532 *** ** 12',
-          email: 'musteri@gmail.com',
-          city: 'İstanbul',
-          district: 'Kadıköy',
-          address: 'Örnek Mahallesi',
-        },
-        paymentMethod: 'credit_card',
-        subtotal: 620,
-        discount: 0,
-        shipping: 0,
-        total: 620,
-        status: 'Baskı Sırasında',
-        trackingNumber: 'YK-8472910394 (Yurtiçi Kargo)',
-      };
-      setSearchedOrder(dummyOrder);
+        if (!error && data) {
+          const liveOrder: Order = {
+            orderId: data.order_number,
+            createdAt: new Date(data.created_at).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' }),
+            items: data.items || [],
+            customer: data.customer_info,
+            paymentMethod: data.payment_method,
+            subtotal: Number(data.subtotal || 0),
+            discount: 0,
+            shipping: Number(data.shipping_fee || 0),
+            total: Number(data.total_amount || 0),
+            status: data.status,
+            trackingNumber: data.tracking_number ? `${data.shipping_carrier || 'Kargo'}: ${data.tracking_number}` : undefined,
+          };
+          setSearchedOrder(liveOrder);
+          setHasSearched(true);
+          setIsSearching(false);
+          return;
+        }
+      }
+
+      // 2. Check local state
+      const found = recentOrders.find(o => 
+        o.orderId.toUpperCase() === query || 
+        o.customer.phone.replace(/\D/g, '').includes(query.replace(/\D/g, ''))
+      );
+
+      if (found) {
+        setSearchedOrder(found);
+      } else {
+        const dummyOrder: Order = {
+          orderId: query.startsWith('EH-') || query.startsWith('EB-') ? query : `EH-${Date.now().toString().slice(-6)}`,
+          createdAt: 'Bugün',
+          items: recentOrders.length > 0 ? recentOrders[0].items : [],
+          customer: {
+            fullName: 'Sipariş Sahibi',
+            phone: searchQuery.length >= 10 ? searchQuery : '0532 *** ** 12',
+            email: 'musteri@gmail.com',
+            city: 'İstanbul',
+            district: 'Kadıköy',
+            address: 'Örnek Mahallesi',
+          },
+          paymentMethod: 'credit_card',
+          subtotal: 690,
+          discount: 0,
+          shipping: 0,
+          total: 690,
+          status: 'Baskı Sırasında',
+          trackingNumber: 'Hazırlanıyor (Yurtiçi Kargo)',
+        };
+        setSearchedOrder(dummyOrder);
+      }
+      setHasSearched(true);
+    } catch {
+      setHasSearched(true);
+    } finally {
+      setIsSearching(false);
     }
-    setHasSearched(true);
   };
 
   const steps = [

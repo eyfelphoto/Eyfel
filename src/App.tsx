@@ -14,12 +14,26 @@ import { InstallationGuide } from './components/InstallationGuide';
 import { CustomerReviews } from './components/CustomerReviews';
 import { FaqSection } from './components/FaqSection';
 import { Footer } from './components/Footer';
+import { AdminPanel } from './components/admin/AdminPanel';
+import { AdminLogin } from './components/admin/AdminLogin';
 import { 
   Sparkles, ShieldCheck, Gift, AlertTriangle, 
   Heart, Filter, CheckCircle2, ArrowRight 
 } from 'lucide-react';
 
 export default function App() {
+  const [isAdminRoute, setIsAdminRoute] = useState(() => {
+    return typeof window !== 'undefined' && window.location.pathname.startsWith('/admin');
+  });
+
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
+    try {
+      return localStorage.getItem('ebedi_hatira_admin_session') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
   const [cart, setCart] = useState<CartItem[]>(() => {
     try {
       const saved = localStorage.getItem('ebedi_hatira_cart');
@@ -45,6 +59,43 @@ export default function App() {
   const [completedOrder, setCompletedOrder] = useState<Order | null>(null);
   const [isTrackingOpen, setIsTrackingOpen] = useState(false);
   const [trackingInitialCode, setTrackingInitialCode] = useState<string>('');
+
+  // Handle URL changes (/admin)
+  useEffect(() => {
+    const handleLocationChange = () => {
+      setIsAdminRoute(window.location.pathname.startsWith('/admin'));
+    };
+
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
+  }, []);
+
+  // Handle PayTR Return Callback (?payment=success or ?payment=failed)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const paymentStatus = params.get('payment');
+    const orderNum = params.get('order');
+
+    if (paymentStatus === 'success' && orderNum) {
+      setTrackingInitialCode(orderNum);
+      setIsTrackingOpen(true);
+      // Clean query params
+      window.history.replaceState({}, '', window.location.pathname);
+    } else if (paymentStatus === 'failed') {
+      alert('PayTR ödeme işlemi tamamlanamadı veya iptal edildi. Lütfen tekrar deneyiniz.');
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, []);
+
+  const handleNavigateToAdmin = () => {
+    window.history.pushState({}, '', '/admin');
+    setIsAdminRoute(true);
+  };
+
+  const handleNavigateToStore = () => {
+    window.history.pushState({}, '', '/');
+    setIsAdminRoute(false);
+  };
 
   useEffect(() => {
     try {
@@ -108,6 +159,30 @@ export default function App() {
 
   const cartTotal = cart.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  // If visiting /admin route, render Admin Panel or Login
+  if (isAdminRoute) {
+    if (isAdminLoggedIn) {
+      return (
+        <AdminPanel
+          onBackToStore={handleNavigateToStore}
+          onLogout={() => {
+            setIsAdminLoggedIn(false);
+            localStorage.removeItem('ebedi_hatira_admin_session');
+          }}
+        />
+      );
+    }
+    return (
+      <AdminLogin
+        onLoginSuccess={() => {
+          setIsAdminLoggedIn(true);
+          localStorage.setItem('ebedi_hatira_admin_session', 'true');
+        }}
+        onBackToStore={handleNavigateToStore}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white text-neutral-900 font-sans selection:bg-amber-100 selection:text-amber-900">

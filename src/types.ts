@@ -70,7 +70,16 @@ export interface OrderCustomerInfo {
   notes?: string;
 }
 
-export type PaymentMethod = 'credit_card' | 'havale';
+export type PaymentMethod = 'credit_card' | 'havale' | 'paytr';
+
+export type OrderStatus = 
+  | 'Ödeme Bekliyor'
+  | 'Ödeme Alındı'
+  | 'Baskı Sırasında'
+  | 'Kalite Kontrol'
+  | 'Kargolandı'
+  | 'Teslim Edildi'
+  | 'İptal Edildi';
 
 export interface Order {
   orderId: string;
@@ -82,11 +91,27 @@ export interface Order {
   discount: number;
   shipping: number;
   total: number;
-  status: 'Baskı Sırasında' | 'Kalite Kontrol' | 'Kargolandı' | 'Teslim Edildi';
+  status: OrderStatus;
+  paymentStatus?: 'pending' | 'paid' | 'failed';
   trackingNumber?: string;
+  shippingCarrier?: string;
   bankInfo?: {
     bankName: string;
     iban: string;
     accountHolder: string;
   };
+}
+
+export interface AdminUser {
+  id: string;
+  email: string;
+  role: 'admin';
+}
+
+export interface SalesReport {
+  totalRevenue: number;
+  totalOrders: number;
+  paidOrdersCount: number;
+  pendingOrdersCount: number;
+  shippedOrdersCount: number;
 }

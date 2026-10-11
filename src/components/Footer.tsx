@@ -139,9 +139,12 @@ export const Footer: React.FC = () => {
           <div className="flex items-center gap-4">
             <span>Türkiye Geneli Teslimat</span>
             <span>•</span>
-            <span>Havale & EFT ile %5 İndirim</span>
+            <span>PayTR 3D Secure Güvenli Alışveriş</span>
             <span>•</span>
-            <span>3D Secure Güvenli Alışveriş</span>
+            <a href="/admin" className="text-neutral-400 hover:text-amber-400 transition-colors flex items-center gap-1 font-semibold">
+              <Lock className="w-3 h-3" />
+              <span>Yönetici Girişi</span>
+            </a>
           </div>
         </div>
       </div>
